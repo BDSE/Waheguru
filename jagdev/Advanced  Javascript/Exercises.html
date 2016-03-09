@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>factorial</title>
+<script type="text/javascript" src="jQuery.js"></script>
+	<style> 
+    </style>
+</head>
+
+<body>
+ 	<input type="text" id="no">
+	<button onclick="myFunction()">Hit</button>
+    
+  <script>
+	var myFunction = function(){
+		var inpu = $("#no").val();
+		var result=inpu.split("").reverse().join("");
+		if(inpu == result){
+			alert("string is Palindrome");
+			}
+		else{
+			alert("string is not palindrome");
+		}	
+	
+	}
+		
+</script>	
+</body>   
+</html>
+

@@ -1,0 +1,23 @@
+Filter:<input type="text" ng-model="customFilter.name">
+	<br ><br >
+	<table   class="table table-striped table-bordered">
+	<tr>
+		<th ng-click="doSort('name')" >Name</th>
+		<th ng-click="doSort('city')">City</th>
+		<th ng-click="doSort('Total')">Order Total</th>
+		<th ng-click="doSort('Joined')">Joining Date</th>
+	</tr>
+	<tr ng-repeat="person in customers|limitTo:5|filter:customFilter|orderBy:sortBy:reverse">
+		<td>{{person.name|uppercase}}</td>
+		<td>{{person.city}}</td>
+		<td>{{person.Total|currency}}</td>
+		<td>{{person.Joined|date}}</td>
+		
+	</tr>	
+	
+
+	</table>
+	<div>
+	<h1>hello world</h1>
+	</div>
+	<span>Total customers:{{customers.length}}</span>

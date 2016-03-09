@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>holdingfingers</title>
+<script type="text/javascript" src="jQuery.min.js"></script>
+	<style>
+         
+     
+	</style>
+</head>
+
+<body>
+  <p> Enter the no. between 1 to 5</p>
+  <input type = "number" name = "number" id = "inputvalue">
+  <button onclick = myfunction() id = "button">try it</bu
+ton>
+  
+      <script>
+	 	 function myfunction(){
+	  x =(Math.random());	
+	 x=x*6;
+      x=Math.floor(x); 
+     
+		 
+            var y = document.getElementById("inputvalue").value;
+		
+		 if(x==y){
+             alert("you pick +x fingers");
+			}
+            else {
+            alert("wrong my no. was " +x);
+			}
+         }
+         
+      </script>
+	
+</body>
+</html>
+

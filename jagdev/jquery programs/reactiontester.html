@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>reactiontester</title>
+<script type="text/javascript" src="jQuery.min.js"></script>
+	<style>
+     #box{
+           width:200px;
+		height:200px;
+		background-color:red;
+		
+	     }
+	img{
+		width:50%;
+		height:50%;}	 
+     
+     
+	</style>
+</head>
+
+<body>
+ 
+ 
+	Armaan
+	<img src = "armaan.jpg">
+	<div id = "box">
+ 	 
+ </div>	
+  
+ <script>
+ $(document).ready(function(){
+ $("#box").click(function(){
+ var clicktime=(Date.now());
+ $(this).hide("fast",function(){
+ $("#box").show((Math.random())*5000);
+ var reversetime = (Date.now());
+ var reacttime =(reversetime - clicktime);
+ alert(reacttime);
+  });
+  });
+});
+ </script>
+	
+</body>
+</html>
+

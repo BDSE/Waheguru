@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>reactiontesterjavascript</title>
+<script type="text/javascript" src="jQuery.min.js"></script>
+	<style>
+     #box{
+           width:200px;
+		height:200px;
+		background-color:red;
+           position:relative;
+		
+	     }
+     
+     
+	</style>
+</head>
+
+<body>
+ 
+ <p> My reaction time is : <span id = "reaction"></span></p>
+ 
+ 	
+ <div id = "box"></div> 
+ 	
+  
+ <script>
+    
+    
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+ 
+     
+
+  var clickedtime;var responsetime;var reactivetime; 
+ 
+
+   
+ 
+  function mycall(){ 
+  var time = Math.random();
+  
+  responsetime = Date.now();
+  setTimeout(function(){
+  if(Math.random() > 0.5){
+
+  document.getElementById("box").style.borderRadius ="100px";
+  }
+  else{
+  document.getElementById("box").style.borderRadius ="0px";
+       }
+  document.getElementById("box").style.display ="block";
+  document.getElementById("box").style.backgroundColor=    	getRandomColor();
+  
+  
+
+  
+ 
+   },time);
+   }
+ 
+
+
+ 
+ document.getElementById("box").onclick = function(){
+ this.style.display="none";
+ var top = Math.random();
+  top = top*300;
+
+   var left = Math.random();
+   left = left*1000;
+ clickedtime = Date.now();
+ reactivetime= (clickedtime-responsetime)/1000;
+ document.getElementById("reaction").innerHTML=reactivetime;
+ document.getElementById("box").style.top=top+"px";
+   document.getElementById("box").style.left =left+"px"; 
+  
+ mycall();
+   }
+ 
+ 
+
+ </script>
+	
+</body>
+</html>
+
+

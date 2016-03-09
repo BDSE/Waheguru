@@ -1,0 +1,1 @@
+ var jagdevb = angular.module('customersModule',[]);

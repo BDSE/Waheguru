@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Enter a no. between 1 and 10</h2>
+<input type = "text" id = "demo">
+<button onclick = "myFunction()"> Submit</button>
+<p id = "twer"></p>
+
+<script>
+ var myFunction= function(){
+ var text;
+ var x = document.getElementById("demo").value ;
+ if(isNaN(x) || x>10 || x<0){
+   text = ("Enter a valid number");
+}
+ else{
+  text = "input ok";
+}
+alert(text);
+ document.getElementById("twer").innerHTML = text;
+ console.log(text);
+}
+
+</script>
+
+</body>
+</html>

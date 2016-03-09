@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Palindrome</title>
+<script type="text/javascript" src="../../js/jQuery.js"></script>
+</head>
+<body>
+	<p>Enter a string:</p>
+	<input type="text" id= "numb">
+	<button onclick = "myFunction(str)">Check</button> 
+ <script>
+	var str = "";
+	str=document.getElementById("numb").value;
+	function myFunction(names){
+	if(str==str.split("").reverse().join("")){
+		alert("palindrome");
+	}
+	else{
+		alert("not palindrome");}
+	};
+ </script>
+</body>
+</html>
+

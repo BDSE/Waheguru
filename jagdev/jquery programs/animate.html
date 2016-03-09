@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>animate</title>
+<script type="text/javascript" src="jQuery.min.js"></script>
+<style>
+     .square{
+             background-color:red;
+             width:200px;
+             height:200px;
+             margin-top:10px;
+		  position:absolute;
+             
+             
+             }
+     #circle{
+             width:200px;
+             height:200px;
+            border-radius:100px;
+             background-color:green;
+             position:relative;
+            }
+  	</style>
+</head>
+<body>
+      <p>this is some text</p>
+      <button>animate  button</button>
+<div id="circle"></div>
+<div class="square"></div>	
+ <script>
+$("button").click(function(){
+$("div").animate({left:"250px",
+			 opacity:"0.5",
+                 height:"150px",
+                 width:"150px"
+});
+});
+      
+       
+ </script>
+ 
+</body>
+</html>

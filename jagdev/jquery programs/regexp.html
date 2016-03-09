@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>regexp</title>
+<script type="text/javascript" src="jQuery.min.js"></script>
+</head>
+<body>
+ <p>Search for a series of strings in w3schools and display the number</p>
+<button onclick = "myfunction()">try it</button>
+
+<p id = "demo"></p>
+
+      	
+ <script> 
+  function myfunction(){
+	var str="Visit W3schools!";
+	var n=p.search(/w3schools/i);
+	document.getElementById("demo").innerHTML= n;
+	} 
+ </script>
+ 
+</body>
+</html>

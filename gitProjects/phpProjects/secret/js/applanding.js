@@ -1,0 +1,1 @@
+$("#midContainer").css("height",$(window).height());

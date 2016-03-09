@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>callbackfunction</title>
+<script type="text/javascript" src="jQuery.min.js"></script>
+<script type = "text/javascript" >
+<title>callbackexample</title>
+<script type="text/javascript" src="../../webContent/js/jQuery.js"></script>
+<script type="text/javascript" src="sumOfNumbers.js"></script>
+</head>
+
+<body>
+
+<p id = "array1">Enter  the array</p>
+<input id  = "array" type = "text">
+
+<button id = "button" onclick = "multiplyby2();" >Submit</button>
+<p id = "returnarray"></p> 
+ <script>
+  var multiplyby2 = function(){
+   
+	var arr = "";
+	arr = document.getElementById("array").value;
+	for(i=0;i<arguments.length;i++){
+		arr[i] = ar[i]*2;
+		
+	}
+	return arr;
+    $("#returnarray").html(arr);
+  }
+	
+	  
+	
+ </script>
+	
+
+<button id = "button" onclick = "multiplyby2();">Submit</button>
+<p id = "returnarray"></p>
+
+
+</body>
+</html>
+
+

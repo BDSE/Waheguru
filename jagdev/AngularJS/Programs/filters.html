@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<title>filtering/sorting</title>
+	<script type="text/javascript" src = "../sourceFile/angular.js"></script>
+	<style>
+	table,th,td{
+		border-spacing:10px;
+		border:1px solid black;
+		border-collapse:collapse;
+		padding:20px;}
+	th{
+		text-align:left;
+		background-color:gray;
+		}
+	</style>		
+</head>
+<body ng-init = "data=[{name:'jagdev',city:'dubai',order:9.99995, joined :'2000-12-02'},{name:'sukhman',city:'paris',order:12.0002020,joined:'2015-17-17'},
+					{name:'kiran',city:'patti',order:12.4,joined:'2014-12-12'},{name:'inder',city:'amritsar',order:15.3456, joined :'2004-12-22'},
+					{name:'mandeep',city:'vancouver',order:19.299995, joined :'2013-12-02'},{name:'avinder',city:'toronto',order:29.99995, joined :'2010-12-02'},
+					{name:'gurbir',city:'tarantaran',order:39.99995, joined :'2010-22-02'}]">
+		
+	<h2> Customers name:</h2>
+	Filter:<input type="text" ng-model = "customerfilter.name">
+	<br /><br />
+	<ol>
+	<li ng-repeat="person in data">{{person.name}}  {{person.city}} {{person.joined}}</li>
+	</ol>
+	<br>
+	<table style = "width:70%">
+	<tr>
+	<th ng-click="sortBy='name';reverse=!reverse">Name</th>
+	<th ng-click="sortBy='city';reverse=!reverse">City</th>
+	<th ng-click="sortBy='order';reverse=!reverse">Order</th>
+	<th ng-click="sortBy='joined';reverse=!reverse">Date Joined</th>
+	</tr>
+	<tr ng-repeat = "person in data| filter:customerfilter|orderBy:sortBy:reverse">
+	<td>{{person.name|uppercase}} </td>
+	<td>{{person.city|uppercase}}</td>
+	<td>{{person.order|currency}}</td>
+	<td>{{person.joined|date}}</td>
+	</tr>
+	</table>
+
+
+</body>
+</html>

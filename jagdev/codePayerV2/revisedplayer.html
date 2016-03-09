@@ -1,0 +1,144 @@
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><!DOCTYPE html>
+<html>
+ <head>
+	<title>RevisedPlayer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><!DOCTYPE html>
+	<script type="text/javascript" src="../../js/jQuery.js"></script> 
+	<script type = "text/javascript" src = "../../js/revisedPlayer.js"></script>
+	<link rel="stylesheet" href="../../css/revisedPlayer.css">
+	<style>
+		body{
+			margin:0;
+			}
+		#topBar{
+			width:100%;
+			height:30px;
+			background-color:#EDEDED;
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+			padding:6px;
+			border-bottom:1px solid gray;
+			}	
+		#logo{
+			float:left;
+			padding:6px;
+			font-size:120%;
+			font-weight:bold;
+			}
+		#toggles li{
+			float:left;
+			padding:5px;
+			border:1px solid gray;
+			list-style:none;
+			}
+		#toggles{
+			width:200px;
+			margin:0 auto;
+			height:27px;
+				 }
+		#runbutton{
+			position:absolute;
+			top:-1px;
+			right:10px;
+			padding:5px 20px;
+		
+			}
+		#run{
+			font-size:120%;
+			}
+		.clear{
+			clear:both;}
+		.codeContainer
+			{
+			width:50%;
+			height:100%;
+			position:relative;
+			float:left;
+			}
+		.codeContainer textarea
+			{
+			width:100%;
+			height:100%;
+			border:none;
+			border-right:1px solid gray;
+			font-family:monotype;
+			font-size:90%;
+			padding:5px;
+			
+			}	
+		.codeLabel{
+			position:absolute;
+			right:10px;
+			font-weight:bold;
+			font-size:120%;
+			top:10px;
+			}
+		#CSSContainer,#JSContainer{
+			display:none;
+			}
+		iframe{
+			position:relative;
+			left:10px;
+			width:100%;
+			height:100%;
+			border:none;
+			}
+		.selected{
+			background-color:gray;
+			}	
+	</style>
+ </head>
+ <body>
+	<div id = "container">
+		<div id = "topBar">
+			<div id = "logo">
+			 Codeplayer
+			</div>
+			<ul id = "toggles">
+				<li class="toggle selected">HTML</li>
+				<li class="toggle">CSS</li>
+				<li class="toggle">JS</li>
+				<li class="toggle selected">Result</li>
+			</ul>
+			<div id = "runbutton">
+			<button id ="run">Run</button>
+			</div>
+		</div>
+		<div class = "clear"></div>
+		<div class = "codeContainer" id="HTMLContainer">
+			<div class="codeLabel">HTML</div>
+			<textarea>Example code</textarea>
+		</div>	
+		<div class = "codeContainer" id="CSSContainer">
+			<div class="codeLabel">CSS</div>
+			<textarea></textarea>
+		</div>
+		<div class = "codeContainer" id="JSContainer">
+			<div class="codeLabel">JS</div>
+			<textarea></textarea>
+		</div>
+		<div class = "codeContainer" id="ResultContainer">
+			<div class="codeLabel">Result</div>
+			<iframe></iframe>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+		var windowHeight = $(window).height();
+		var topBarHeight  = $("#topBar").height();
+		var codeHeight =  windowHeight-topBarHeight;
+		$(".codeContainer").height(codeHeight+"px");
+		$(".toggle").click(function(){
+		$(this).toggleClass("selected");
+		var activediv = $(this).html();
+		$("#"+activediv+"Container").toggle();
+		var showingDivs = $(".codeContainer").filter(function(){
+		return($(this).css("display")!="none");
+		}).length;
+		var width = 100/showingDivs;
+		$(".codeContainer").css("width",width+"%");
+		
+		});
+		});
+	</script>
+ </body>
+</html> 
