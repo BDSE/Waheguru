@@ -1,0 +1,10 @@
+create table StudentDetailsBackup (id int(23) auto_increment primary key not null, firstName varchar(30) not null, lastName varchar(30) not null, email varchar(100) not null, mobileNumber varchar(100), enrolledDate timestamp);
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Amar4','Sandhu','shableen@gmail.com', '111',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Amar5','Sandhu','shableen@gmail.com', '222',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Amar6','Sandhu','shableen@gmail.com', '333',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Amar7','Sandhu','shableen@gmail.com', '444',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Shableen2','Sandhu','shableen@gmail.com', '555',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Shableen3','Sandhu','shableen@gmail.com', '666',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Shableen4','Sandhu','shableen@gmail.com', '777',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Orange','Sandhu','shableen@gmail.com', '888',NOW());
+INSERT INTO StudentDetailsBackup (firstName,lastName,email,mobileNumber,enrolledDate) Values('Ammi','Sandhu','shableen@gmail.com', '999',NOW());
