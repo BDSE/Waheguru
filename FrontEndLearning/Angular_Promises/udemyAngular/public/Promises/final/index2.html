@@ -1,0 +1,65 @@
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script src="myPromiseApp2.js"></script>
+	<link href="app.css" rel="stylesheet"></link>
+</head>
+
+<body ng-app="SmashBoard">
+	<div class="container">
+		<div class="jumbotron">
+			<p>My Promises..AmarSandhu</p>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">Location</div>
+					<div class="panel-body">
+						<p>Address:
+							<input type="text" id="address">
+						</p>
+						<button id="getYourLocationInfo" class="btn btn-primary">Get your location info</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">Formatted Address</div>
+					<div class="panel-body">
+						<p>Address:
+							<span id="formattedAddress"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="panel panel-success">
+				<div class="panel-heading">Location</div>
+				<div class="panel-body">
+					<p>
+						<b>Latitude:</b><span id="lat"></span>
+					</p>
+					<p>
+						<b>Longitude:</b> <span id="long"></span>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					Weather
+				</div>
+				<div class="panel-body">
+					<div id="date"></div>
+					<div id="forecast"></div>
+				</div>
+			</div>
+		</div>
+</body>
+
+</html>
