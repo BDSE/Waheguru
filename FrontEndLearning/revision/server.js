@@ -1,12 +1,13 @@
-var server = require("static-server");
+var StaticServer = require('static-server');
 
-var myServer = new server({
-    
-    port:3000,
-    rootPath: './public'
-    
+var server = new StaticServer({
+
+	rootPath: './public/',
+	port: 3000
 });
 
-myServer.start(function(){
-    console.log("server start ho gya je");
-})
+server.start(function () {
+
+	console.log("server started at port ah wali : " + server.port);
+
+});

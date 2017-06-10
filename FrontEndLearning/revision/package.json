@@ -1,7 +1,7 @@
 {
-  "name": "revision",
+  "name": "1.0",
   "version": "1.0.0",
-  "description": "revision project",
+  "description": "Revision",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "gulp-livereload": "^3.8.1"
   }
 }
