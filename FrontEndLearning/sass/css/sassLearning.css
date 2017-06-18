@@ -1,0 +1,130 @@
+@import url(importedFile.css);
+html {
+  background: #def345;
+}
+
+#parentDiv {
+  width: 100.7px;
+  height: 20px;
+}
+
+#parent myDiv {
+  width: 100px;
+}
+
+#parent #myDiv {
+  width: 100px;
+}
+
+#parent .myDiv {
+  width: 100px;
+}
+
+#parent {
+  background-image: url("../images/nature/nature1.jpg");
+}
+#parent #child1 {
+  width: 100px;
+}
+#parent #child2 {
+  width: 100px;
+}
+#parent #child2 #child3 {
+  width: 100px;
+}
+#parent.someClass {
+  width: 100px;
+}
+#parent #someId {
+  width: 100px;
+}
+
+#parent .content, #parent .img {
+  width: 100px;
+  height: 20px;
+}
+
+.sharedFromShared2, .test {
+  margin: 2px 8px;
+  border: 2px solid green;
+  border-radius: 2px 3px 4px 5px solid black;
+}
+.sharedFromShared2 .test2, .test .test2 {
+  color: red;
+}
+
+.content {
+  border: 8px solid red;
+}
+
+.img {
+  margin: 0 auto;
+}
+
+.test {
+  font: bold 14px Arial;
+}
+
+.buttonRedBlack {
+  background: red;
+  background-image: -webkit-linear-gradient(top, red, black);
+  background-image: -moz-linear-gradient(top, red, black);
+  background-image: -ms-linear-gradient(top, red, black);
+  background-image: -o-linear-gradient(top, red, black);
+  background-image: linear-gradient(to bottom, red, black);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.buttonGreenYello {
+  background: green;
+  background-image: -webkit-linear-gradient(top, green, yellow);
+  background-image: -moz-linear-gradient(top, green, yellow);
+  background-image: -ms-linear-gradient(top, green, yellow);
+  background-image: -o-linear-gradient(top, green, yellow);
+  background-image: linear-gradient(to bottom, green, yellow);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+body {
+  line-height: 1.2em;
+}
+body .myAnotherDiv {
+  color: red;
+  font: bold 12px Arial;
+}
+
+h1 {
+  font-size: 25px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 15px;
+}
+
+h4 {
+  font-size: 10px;
+}
+
+.someDivUsingMyFunction {
+  content: "match";
+}
+
+/*# sourceMappingURL=sassLearning.css.map */
