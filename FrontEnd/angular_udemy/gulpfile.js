@@ -19,14 +19,16 @@ gulp.task('html', function () {
 		.pipe(liveReload());
 });
 //CSS
+gulp.task('css',function(){
 
+});
 //Default
 
 //Watch
 gulp.task('watch', function () {
-	console.log('watch started...')
+	console.log('watch started...');
 	require('./server.js');
 	liveReload.listen();
 	gulp.watch(SCRIPT_PATH, ['scripts']);
 	gulp.watch(HTML_PaATH, ['html']);
-})
+});
