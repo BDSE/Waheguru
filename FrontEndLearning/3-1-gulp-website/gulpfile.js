@@ -36,7 +36,7 @@ var IMAGE_PATH = 'public/images/**/*.{png,jpeg,jpg,svg,gif}';
 
 var testfn = function () {
 	console.log('used in default');
-}
+};
 
 //HTML
 gulp.task('html', function () {
@@ -80,7 +80,8 @@ gulp.task('styles', function () {
 			//target specific browsers here
 		}))
 		.pipe(sass({
-			outputStyle: 'compressed'
+			//use compressed in real applications
+			outputStyle: 'expanded'
 		}))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('public/distribution'))
