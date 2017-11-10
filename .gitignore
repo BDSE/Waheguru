@@ -1,5 +1,4 @@
 
-# Created by https://www.gitignore.io/api/node,macos
 
 ### macOS ###
 .DS_Store
@@ -87,6 +86,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-
-# End of https://www.gitignore.io/api/node,macos
