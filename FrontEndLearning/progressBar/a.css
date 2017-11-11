@@ -1,0 +1,28 @@
+#progressBar {
+    height: 20px;
+    width: 200px;
+    border: 1px solid grey;
+    margin: 0 auto;
+}
+
+#progressBar #fillBar {
+    background-color: green;
+    width: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+@keyframes anim {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.animate {
+    animation-name: anim;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+}

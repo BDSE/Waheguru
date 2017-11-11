@@ -125,6 +125,11 @@ h4 {
 
 .someDivUsingMyFunction {
   content: "match";
+  -webkit-border-radius: 2px 3px 4px 5px;
+  -moz-border-radius: 2px 3px 4px 5px;
+  -o-border-radius: 2px 3px 4px 5px;
+  border-radius: 2px 3px 4px 5px;
+  display: block;
 }
 
 /*# sourceMappingURL=sassLearning.css.map */

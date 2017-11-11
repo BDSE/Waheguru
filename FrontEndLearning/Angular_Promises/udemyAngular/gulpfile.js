@@ -2,8 +2,8 @@ var gulp = require('gulp');
 var liveReload = require('gulp-livereload');
 
 //Paths
-var SCRIPT_PATH = 'public/*/*.js';
-var HTML_PaATH = 'public/*/*.html';
+var SCRIPT_PATH = 'public/**/*.js';
+var HTML_PaATH = 'public/**/*.html';
 
 //Scripts
 gulp.task('scripts', function () {

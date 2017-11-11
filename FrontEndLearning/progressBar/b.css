@@ -1,0 +1,17 @@
+#progressBar {
+    height: 20px;
+    width: 267px;
+    border: 1px solid grey;
+    margin: 0 auto;
+}
+
+#progressBar #fillBar {
+    background-color: green;
+    width: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+#progressBar:hover{
+   border: 1px solid red;
+}
