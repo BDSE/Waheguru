@@ -19,6 +19,8 @@ $marginList: 2px 8px;
 $headers: h1,h2,h3,h4;
 $headerFonts: 25px,20px,15px,10px;
 
+$radius: 2px 3px 4px 5px;
+
 ////////////use of vasriable////////////////////////
 
 #parentDiv {
@@ -193,11 +195,19 @@ body{
         @return "no match"
     }
 }
-
+@mixin border-radius($radius){
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -o-border-radius: $radius;
+     border-radius: $radius;
+}
 
 .someDivUsingMyFunction{
     content: list-match($headers,$headerFonts);
+    @include border-radius($radius);
+    display: block;
 }
+
 
 
 

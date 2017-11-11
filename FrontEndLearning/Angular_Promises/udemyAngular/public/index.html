@@ -1,0 +1,22 @@
+<html ng-app="myApp">
+
+<head>
+    <title>Test</title>
+</head>
+
+<body ng-controller="controller">
+    <div ng-repeat="obj in states track by $index">
+        <label for="country">{{obj.country | uppercase}}</label>
+        <input type="checkbox" name="country" ng-model="showHide[obj.country]">
+    </div>
+    <div ng-repeat="obj in states track by $index">
+        <ul ng-show="showHide[obj.country]">
+            <li ng-repeat="obj2 in obj.states">{{obj2}}</li>
+        </ul>
+    </div>
+    <div ng-show="test">dfkjdssdkl</div>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="test.js"></script>
+</body>
+
+</html>

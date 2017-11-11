@@ -1,0 +1,198 @@
+<!Docktype html>
+<html lang="en-us" ng-app="ngRevist" ng-init="initialInputValue='initial val!'; copied=false; copyCount=0;">
+
+<head>
+    <title>NG Revisit</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .flexBox {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .box1,
+        .box2,
+        .box3,
+        box4 {
+            border: 1px #ccc solid;
+            padding: 10px;
+        }
+        
+        .box1 {
+            order: 3;
+            flex: 2;
+            align-content: center;
+        }
+        
+        .box2 {
+            order: 2;
+            flex: 1;
+        }
+        
+        .box3 {
+            order: 4;
+            flex: 1;
+        }
+        
+        .box4 {
+            order: 1;
+            flex: 1;
+        }
+        
+        table,
+        th,
+        td {
+            border-spacing: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 20px;
+        }
+        
+        th {
+            text-align: left;
+            background-color: gray;
+        }
+        
+        a {
+            cursor: pointer;
+        }
+        
+        .form-control {
+            width: 30%;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">AngularJS</a>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#/second">Second</a></li>
+                    <p>{{initialInputValue}}</p>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div ng-view></div>
+    <div class="flexBox" ng-controller="ngRevistController">
+        <div class="box1">
+            <p>{{"Hello there! "+ name}}</p>
+            <p>ngRevist box1</p>
+            <input type="text" ng-model="testVariableForWatchers">
+            <p>{{testVariableForWatchers|uppercase}}</p>
+        </div>
+        <div class="box2">
+            <a href="{{::hrefTest}}">Href test</a>
+            <p>ngRevisit box2</p>
+            <input type="text" ng-model="inputHandle">
+            <input type="text" ng-model="initialInputValue">
+            <input type="text" ng-model="inputHandle2"> {{"THIS VARIABLE HAS NOT BEEN ADDED TO JS FILE, AS $SCOPE.HANDLEINPUT2 NOT DONE " +inputHandle2}}
+            <input ng-copy="copied= true; copyCount=copyCount+1;" ng-model="copyInputValue">
+            <span>copied: {{copied}} copy count: {{copyCount}}</span>
+        </div>
+        <div class="box3">
+            <p>ngRevist box3</p>
+            <p>{{inputHandle}}</p>
+            <p>{{"to lower case: "+lowercase(inputHandle)}}</p>
+            <input type="text" required ng-model="characters">
+            <div class="alert" ng-class="{'alert-danger': characters.length > 5, 'alert-warning': characters.length >3}" ng-hide="characters.length>10">background will change to alert danger(bootstarp) if more than 5 characters typed warning color if more than 3...ng-if used</div>
+            <div class="alert alert-danger" ng-show="characters.length > 10"> characters got greater than 10 so ur div was hidden</div>
+            <input type="text" required ng-model="emailId">
+            <div class="alert alert-warning" ng-show="verifyEmail(emailId)">email id acceptable</div>
+            <div class="alert alert-danger" ng-hide="verifyEmail(emailId)">email id not accepatable</div>
+            <div>{{myDate}}</div>
+            <div class="btn btn-primary" ng-click="nextDate()">click for next date</div>
+            <div class="btn btn-primary" ng-click="changeHash()">changeHash ans call pokemon api</div>
+            <input type="text" ng-model="pokemon" placeholder="enter pokemon eg pokemon/1">
+            <div> </div>
+            <div class="btn btn-primary" onclick="testXMLHttp()">click to make api call</div>
+            <div class="btn btn-primary" id="jqLiteButton">jQuery</div>
+        </div>
+        <div class="box4">
+            <form name="myForm" ng-controller="formController">
+                <p>{{"Hello form! "+ name}}</p>
+                <input type="email" name="email" ng-required ng-model="email"><span class="alert alert-danger" ng-show="myForm.email.$invalid">Enter right email</span>
+                <span class="alert alert-warning" ng-show="myForm.email.$pristine">pristine</span>
+                <span class=" alert alert-warning" ng-show="myForm.email.$untouched">untouched</span>
+                <input type="text" name="textbox" ng- required ng-model="testfield" ng-pattern="/[a-z]+.*[0-9]/">
+                <span class="alert alert-danger" ng-show="myForm.textbox.$invalid">right pattern is [a-z]+.*[0-9]</span>
+                <span class="alert alert-warning" ng-show="myForm.textbox.$valid">pattern match</span>
+                <input type="text" ng-model="number">
+
+            </form>
+        </div>
+        <div search-results my-object="objectForDirective" john-address="{{objectForDirective.address}}" input-handle="{{inputHandle}}"></div>
+        <div ng-mydirective my-obj="objectForDirective">transclusion text</div>
+        <!--        <search-results></search-results>-->
+    </div>
+    <br /><br />
+
+    <!--Google map, delay bind, transclusionAndControllerDirective and table directives -->
+    <div class="table filter" ng-controller="tableController">
+        <div ng-table="myTable" datasource="data"></div>
+        <ng-table-two ng-model="data" height="300" width="400"></ng-table-two>
+        <div geo-location height="400" width="400"></div>
+        <div transclusion-and-controller-directive tasks="tasks">
+
+            <div ng-repeat="task in tasks">
+                {{task}}
+            </div>
+
+        </div>
+        <ul>
+            <li ng-repeat="person in data" ng-class-odd="'alert-info'" ng-class-even="'alert-warning'" class="alert" delay-bind-directive="{{::person.city}}" trigger="mouseenter" attribute="href">
+                <a delay-bind-directive="{{::person.url}}" trigger="mouseenter" attribute="href">
+                    {{person.name}}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <div ng-controller="filterAndPagination">
+            <input class="form-control" ng-model="filterText" placeholder="Enter filter text">
+            <select class="form-control" ng-model="pageSize" ng-options="pagesize for pagesize in pagesizes">
+        
+     </select>
+            <ul>
+                <li ng-repeat="item in data | filter:filterText | limitTo:pageSize:currentPage*pageSize">
+                    {{item}}
+                </li>
+            </ul>
+            <button class="btm-sm btn-primary" ng-disabled="currentPage==0" ng-click="currentPage=currentPage- 1">
+        Previous
+    </button> {{currentPage+1+ " of " +numberOfPages()}}
+            <button class="btm-sm btn-primary" ng-disabled="currentPage==numberOfPages()-1" ng-click="currentPage= currentPage+1">
+        Next
+    </button>
+        </div>
+
+
+    </div>
+    <div ng-controller="interview">
+       <div>{{inter}}</div>
+    
+    </div>
+
+    <!--    <div ng-controller="testController">sdsfsf</div>-->
+    <!-- load angular via CDN -->
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="//code.angularjs.org/1.3.0-rc.1/angular-route.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCCrm-EIRsH_FdUqctprUoFi3hp2FnTX0&callback=myMap"></script>
+    <script src="myNgApp.js"></script>
+</body>
+
+</html>

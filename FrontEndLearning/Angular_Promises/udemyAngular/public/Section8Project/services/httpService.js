@@ -19,5 +19,4 @@ weatherApp.service('$httpService', ['$http', '$q', function ($http, $q) {
 		});
 		return deffered.promise;
 	}
-
 }]);
