@@ -2,8 +2,12 @@
 
 ### macOS ###
 .DS_Store
+/Learning-work/webpack/udemyWebpack1/.DS_Store
 .AppleDouble
 .LSOverride
+package-lock.json
+Learning-work/webpack/udemyWebpack1/build/bundle.js
+Learning-work/webpack/udemyWebpack1/package-lock.json
 
 # Icon must end with two \r
 Icon
