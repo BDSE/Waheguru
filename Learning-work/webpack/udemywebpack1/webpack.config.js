@@ -1,8 +1,9 @@
-const debug = process.env.NODE_ENV !== "production";
+const watch = process.env.NODE_ENV === "dev_watch";
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanDistFolder = require("clean-webpack-plugin");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
     entry: {
@@ -59,7 +60,14 @@ const config = {
     plugins: [
     new CleanDistFolder(["dist"]),
     new ExtractTextPlugin("[name].styles.css"),
-  ]
+    new UglifyJSPlugin({
+        sourceMap: true
+      }),
+    new webpack.DefinePlugin({
+        // Definitions...
+      })
+  ],
+  watch: watch ? true: false
 }
 
 module.exports = config;
