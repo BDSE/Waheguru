@@ -1,21 +1,30 @@
 {
-    "name": "udemywebpack1",
+    "name": "testwebpack",
     "version": "1.0.0",
-    "description": "",
     "main": "index.js",
     "scripts": {
-      "build": "webpack"
+        "build": "webpack",
+        "watch": "webpack --watch"
     },
     "author": "",
     "license": "ISC",
+    "keywords": [],
+    "description": "",
     "devDependencies": {
-      "babel-core": "^6.26.0",
-      "babel-loader": "^7.1.2",
-      "babel-preset-env": "^1.6.1",
-      "css-loader": "^0.28.7",
-      "extract-text-webpack-plugin": "^3.0.2",
-      "style-loader": "^0.19.0",
-      "webpack": "^3.8.1"
+        "autoprefixer": "^7.1.6",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-preset-env": "^1.6.1",
+        "clean-webpack-plugin": "^0.1.17",
+        "css-loader": "^0.28.7",
+        "cssnano": "^3.10.0",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "lost": "^8.2.0",
+        "node-sass": "^4.6.1",
+        "postcss-loader": "^2.0.8",
+        "rucksack-css": "^1.0.2",
+        "sass-loader": "^6.0.6",
+        "style-loader": "^0.19.0",
+        "webpack": "^3.8.1"
     }
-  }
-  
+}

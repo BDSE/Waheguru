@@ -1,9 +1,14 @@
-import sumtest from './util';
-import "./image-viewer";
+import arr from './array';
+import fun1 from './modules/module1';
+import fun2 from './modules/module2';
+import './sass/main.scss';
+//import './css/main.css';
 
-//const sum = require('./util');
+console.log(fun1);
 
-console.log(sumtest);
-const total = sumtest(10,45);
+console.log("sum.....",fun1(2,345,56,7));
+console.log("str......",fun2(...arr));
 
-console.log(total);
+for(var x in arr){
+    console.log(arr[x]+" : "+x);
+}
