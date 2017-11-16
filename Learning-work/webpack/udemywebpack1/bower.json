@@ -1,0 +1,20 @@
+{
+  "name": "testwebpack",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "amarsandhu2 <amarfatehsandhu@stanfordhealthcare.org>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/BDSE/Waheguru",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}

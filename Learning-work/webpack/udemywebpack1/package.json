@@ -4,7 +4,8 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack",
-        "watch": "webpack --watch"
+        "watch": "webpack --watch",
+        "bower": "bower install"
     },
     "author": "",
     "license": "ISC",
@@ -19,11 +20,14 @@
         "css-loader": "^0.28.7",
         "cssnano": "^3.10.0",
         "extract-text-webpack-plugin": "^3.0.2",
+        "jshint": "^2.9.5",
+        "jshint-loader": "^0.8.4",
         "lost": "^8.2.0",
         "node-sass": "^4.6.1",
         "postcss-loader": "^2.0.8",
         "rucksack-css": "^1.0.2",
         "sass-loader": "^6.0.6",
+        "source-map-loader": "^0.2.3",
         "style-loader": "^0.19.0",
         "uglifyjs-webpack-plugin": "^1.0.1",
         "webpack": "^3.8.1"

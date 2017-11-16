@@ -1,3 +1,6 @@
+import jq from '../lib/jquery/dist/jquery';
+jq('body').addClass("testPage");
+console.log(SHC);// this the global variable..can be accessed anywhere without importing.
 const myfun2 = (...args) => {
     console.log("mymodule 2 it is..sourcemaps work");
     let str = "";
@@ -5,6 +8,6 @@ const myfun2 = (...args) => {
         str = str+args[x];
     }
     return str;
-}
+};
 
 export default myfun2;
