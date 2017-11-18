@@ -1,4 +1,3 @@
-import $ from './lib/jquery/dist/jquery.js';
 import arr from './array';
 import fun1 from './modules/module1';
 import fun2 from './modules/module2';

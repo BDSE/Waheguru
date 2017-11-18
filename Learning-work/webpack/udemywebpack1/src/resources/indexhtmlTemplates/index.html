@@ -1,8 +1,10 @@
 <html>
-<head><title><%= htmlWebpackPlugin.options.title %></title></head>
+<head><title><%= htmlWebpackPlugin.options.title %></title><link href="<%=process.env.ASSET_PATH%>/resources/build/mainPageEntry.css" rel="stylesheet"></head>
 <body>
     <div>Amar sandhu test via templatez.....<%=process.env.ASSET_PATH%></div>
-    <img src="images/download-app-ios8.png">
+    <img src="<%=process.env.ASSET_PATH%>/resources/images/download-app-ios8.png">
     <a href="./index2.html">Goto next page, with a newer bundle</a>
+    <script type="text/javascript" src="<%=process.env.ASSET_PATH%>/resources/build/vendor.js"></script>
+    <script type="text/javascript" src="<%=process.env.ASSET_PATH%>/resources/build/mainPageEntry.js"></script></body>
 </body>
 </html>

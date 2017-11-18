@@ -1,3 +1,6 @@
+/**
+ *  Webpack Configuration file for Rigel
+ */
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -7,7 +10,10 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const watch = process.env.NODE_ENV === "dev_watch";
 const CDN = (process.env.CDN_URL)?process.env.CDN_URL+"/Rigel" : '/Rigel';
 const context = __dirname+'/src/resources';
-const VENDOR_LIB = ['./lib/jquery/dist/jquery.js','./lib/angular/angular.js'];
+const VENDOR_LIB = [
+    './lib/jquery/dist/jquery.js',
+    './lib/angular/angular.js'
+];
 
 const config = {
     entry: {
@@ -16,10 +22,10 @@ const config = {
         nextPageEntry: './index2.js'//these are two entry points for two different pages.
     },
     context: path.resolve(context),
-    devtool: 'source-map', //this only creates source map for JS, turn it off in production
+    //devtool: 'source-map', //this only creates source map for JS, turn it off in production, sourcemap plugin can be used alternatively as well.
     watch: watch ? true : false,
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].js',
         path: path.resolve(context, 'build'),
         publicPath: 'build/'
     },
@@ -44,7 +50,7 @@ const config = {
                             }
                         },
                         {
-                            loader: "postcss-loader", // perform tasks like autoprepixing, minification etc seepostcss.config.css
+                            loader: "postcss-loader", // perform tasks like autoprepixing, minification etc
                             options: {
                                 sourceMap: true
                             }
@@ -60,7 +66,7 @@ const config = {
             },
             {
                 test: /\.js$/,
-                exclude: /(node_modules)(jquery)/,
+                exclude: [/lib/, /node_modules/],
                 use: 'babel-loader'
             },
             {
@@ -69,7 +75,7 @@ const config = {
                 exclude: [/lib/, /node_modules/], //exclude file from node_modules folder
                 use: [
                     {
-                        loader: "jshint-loader",
+                        loader: "jshint-loader", //options can be modified according to the preferences.
                         options: {
                             camelcase: true,
                             esversion: 6,
@@ -99,21 +105,21 @@ const config = {
         ]
     },
     plugins: [
-                 new CleanDistFolder([context+"/build"]),
-                 new ExtractTextPlugin("[name].styles.css"),
-                //  new UglifyJSPlugin({
-                //     // comments: false,
-                //     // dropDebugger: true,
-                //     // dropConsole: true,
-                //     // compressor: {
-                //     //   warnings: false,
-                //     // }
-                //     //  output: {
-                //     //      comments: false,
-                //     //     }
-                //     //turn on for production
-                //     sourceMap: true
-                // }),
+                 new CleanDistFolder([context+"/build",context+"/index.html",context+"/index2.html"]),
+                 new ExtractTextPlugin("[name].css"),
+                 new UglifyJSPlugin(
+                    {
+                        sourceMap: true,
+                        uglifyOptions: {
+                          ie8: false,
+                          ecma: 8,
+                          output: {
+                            comments: false,
+                            beautify: false
+                          }
+                        }
+                      }
+                 ),
                 new webpack.DefinePlugin({
                     'process.env.ASSET_PATH': JSON.stringify(CDN)
                 }),
@@ -122,17 +128,23 @@ const config = {
                     minChunks: Infinity, //infinity will not allow any other common chunk to be added in this vendor chunk.
                   }),
                   new htmlWebpackPlugin({
+                      chunks: ['mainPageEntry'],
                       title: 'First page',
+                      inject:false,
                       template: 'indexhtmlTemplates/index.html',
-                      chunks: ['mainPageEntry','vendor'],
                       filename: '../index.html'
                   }),
                   new htmlWebpackPlugin({
+                    chunks: ['nextPageEntry'],
                     title: 'Second page',
+                    inject: false,
                     template: 'indexhtmlTemplates/index1.html',
-                    chunks: ['nextPageEntry','vendor'],
                     filename: '../index2.html'
-                })
+                }),
+                new webpack.SourceMapDevToolPlugin({
+                    // plugin makes sourcemaps for js and css by default.
+                    exclude: ['vendor.js'] // will exclude jquery etc from the sourcemaps
+                  })
   ]
 }
 module.exports = config;

@@ -3,11 +3,11 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "build": "webpack",
+        "webpack_dev": "webpack",
         "webpack_min": "webpack -p",
-        "watch": "webpack --watch",
+        "webpack_watch": "webpack --watch",
         "bower": "bower install",
-        "prodbuild": "CDN_URL='http://mytestcdn.com/stanford' webpack"
+        "webpack_prod": "CDN_URL='http://mytestcdn.com/stanford' webpack"
     },
     "author": "",
     "license": "ISC",

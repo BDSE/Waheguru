@@ -1,3 +1,4 @@
+import $ from '../lib/jquery/dist/jquery.js';
 $('body').addClass("testPage");
 console.log(SHC);// this the global variable..can be accessed anywhere without importing.
 const myfun2 = (...args) => {
