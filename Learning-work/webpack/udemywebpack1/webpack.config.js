@@ -1,20 +1,27 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const htmlWebpackPlugin  = require('html-webpack-plugin');
 const CleanDistFolder = require("clean-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const watch = process.env.NODE_ENV === "dev_watch";
+const CDN = (process.env.CDN_URL)?process.env.CDN_URL+"/Rigel" : '/Rigel';
+const context = __dirname+'/src/resources';
+const VENDOR_LIB = ['./lib/jquery/dist/jquery.js','./lib/angular/angular.js'];
 
 const config = {
     entry: {
-        mainPageEntry: './src/index.js', //creating separate bundles for separate pages.
-        nextPageEntry: './src/index2.js' //these are two entry points for two different pages.
+        vendor: VENDOR_LIB,
+        mainPageEntry: './index.js', //creating separate bundles for separate pages.
+        nextPageEntry: './index2.js'//these are two entry points for two different pages.
     },
+    context: path.resolve(context),
     devtool: 'source-map', //this only creates source map for JS, turn it off in production
     watch: watch ? true : false,
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(context, 'build'),
+        publicPath: 'build/'
     },
     module: {
         rules: [
@@ -67,7 +74,6 @@ const config = {
                             camelcase: true,
                             esversion: 6,
                             reporter: function(errors) { 
-                             console.log("..........",errors);
                                for(let x in errors){
                                    let error = errors[x];
                                     this.emitError(`Linting Failed - ID: ${error.id} Code: ${error.code} Reason: ${error.reason} Evidence: ${error.evidence} At: ${error.line}:${error.character}`);
@@ -81,23 +87,52 @@ const config = {
                 test: /\.js$/,
                 use: ["source-map-loader"],
                 enforce: "pre"
+              },
+              {
+                  test: /\.(jpe?g|png|gif|svg)$/,
+                  use : [
+                      {
+                          loader: 'file-loader'
+                      } 
+                  ]
               }
         ]
     },
     plugins: [
-                 new CleanDistFolder(["dist"]),
+                 new CleanDistFolder([context+"/build"]),
                  new ExtractTextPlugin("[name].styles.css"),
-                 new UglifyJSPlugin({
-                    //  output: {
-                    //      comments: false,
-                    //     }
-                    //turn on for production
-                    sourceMap: true
-                }),
+                //  new UglifyJSPlugin({
+                //     // comments: false,
+                //     // dropDebugger: true,
+                //     // dropConsole: true,
+                //     // compressor: {
+                //     //   warnings: false,
+                //     // }
+                //     //  output: {
+                //     //      comments: false,
+                //     //     }
+                //     //turn on for production
+                //     sourceMap: true
+                // }),
                 new webpack.DefinePlugin({
-                    // Definitions...
+                    'process.env.ASSET_PATH': JSON.stringify(CDN)
+                }),
+                new webpack.optimize.CommonsChunkPlugin({
+                    name: "vendor",
+                    minChunks: Infinity, //infinity will not allow any other common chunk to be added in this vendor chunk.
+                  }),
+                  new htmlWebpackPlugin({
+                      title: 'First page',
+                      template: 'indexhtmlTemplates/index.html',
+                      chunks: ['mainPageEntry','vendor'],
+                      filename: '../index.html'
+                  }),
+                  new htmlWebpackPlugin({
+                    title: 'Second page',
+                    template: 'indexhtmlTemplates/index1.html',
+                    chunks: ['nextPageEntry','vendor'],
+                    filename: '../index2.html'
                 })
   ]
 }
-
 module.exports = config;

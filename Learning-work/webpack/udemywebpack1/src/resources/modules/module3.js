@@ -1,3 +1,4 @@
-const body = $1('body');
+
+const body = $('body');
 console.log(body);
 body.addClass('testFromWebpack');

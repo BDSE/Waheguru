@@ -1,4 +1,3 @@
-import $ from '../lib/jquery/dist/jquery';
 $('body').addClass("anotherTest");
 window.SHC = {};// global variable can be accessed in al the modules
  const myfun = (...args)=> {
@@ -8,6 +7,11 @@ window.SHC = {};// global variable can be accessed in al the modules
         sum = sum+args[x];
     }
     return sum;
+};
+
+var obj = {
+    a:20,
+    b:23
 };
 
 //export {myfun, myfun2};
