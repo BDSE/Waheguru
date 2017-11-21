@@ -3,11 +3,13 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "webpack_dev": "webpack",
+        "webpack_dev": "ENV='dev' webpack",
+        "webpack_prod": "CDN_URL='http://mytestcdn.com/stanford' ENV='prd' webpack",
+        "webpack_stg": "ENV='stg' webpack",
         "webpack_min": "webpack -p",
-        "webpack_watch": "webpack --watch",
+        "webpack_watch": "ENV='dev' webpack --watch",
         "bower": "bower install",
-        "webpack_prod": "CDN_URL='http://mytestcdn.com/stanford' webpack"
+        "serve": "webpack-dev-server"
     },
     "author": "",
     "license": "ISC",
@@ -24,18 +26,22 @@
         "extract-text-webpack-plugin": "^3.0.2",
         "file-loader": "^1.1.5",
         "html-webpack-plugin": "^2.30.1",
+        "i": "^0.3.6",
         "image-webpack-loader": "^3.4.2",
         "jshint": "^2.9.5",
         "jshint-loader": "^0.8.4",
         "lost": "^8.2.0",
         "node-sass": "^4.6.1",
         "postcss-loader": "^2.0.8",
+        "ruby-sass-loader": "^0.4.0",
         "rucksack-css": "^1.0.2",
         "sass-loader": "^6.0.6",
         "source-map-loader": "^0.2.3",
         "style-loader": "^0.19.0",
         "uglifyjs-webpack-plugin": "^1.0.1",
         "url-loader": "^0.6.2",
-        "webpack": "^3.8.1"
+        "webpack": "^3.8.1",
+        "webpack-dev-server": "^2.9.4",
+        "webpack-merge": "^4.1.1"
     }
 }

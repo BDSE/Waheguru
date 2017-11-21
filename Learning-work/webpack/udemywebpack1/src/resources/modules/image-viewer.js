@@ -1,6 +1,6 @@
 import imgURL from '../images/fitbit-logo.png';
 
-console.log(process.env.ASSET_PATH);
+console.log(imgURL);
 const img1 = document.createElement('img');
 img1.src = imgURL;
 
