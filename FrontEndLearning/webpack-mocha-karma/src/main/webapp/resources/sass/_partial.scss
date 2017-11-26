@@ -1,0 +1,10 @@
+$color-bg: red;
+
+body{
+    background: $color-bg;
+    div {
+        border-radius: 5px;
+        border: 2px solid black;
+        position: relative;
+    }
+}
