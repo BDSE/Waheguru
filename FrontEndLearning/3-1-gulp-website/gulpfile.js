@@ -185,7 +185,7 @@ gulp.task('default', ['clean', 'images', 'html', 'styles', 'scripts'], function 
 //watch
 gulp.task('watch', ['default'], function () {
 	console.log("gulp watch started...");
-	require('./server.js');
+	//require('./server.js');
 	liveReload.listen();
 	//scripts
 	gulp.watch(SCRIPTS_PATH, ['scripts']);
