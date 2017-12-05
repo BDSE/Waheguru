@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import SearchBar from './components/searchBar';
+// create a component. this should produce some html
+// html inside the javascrpit is called jsx
 
-import App from './components/app';
-import reducers from './reducers';
+const API_KEY = "AIzaSyAQ_nwLjiBGRV-Ci6gprcMjRWZpzziz5n0";
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const App = function () {
+    return <div>
+        <SearchBar />
+    </div>
+}
 
-ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+// take this components generated html and put it on the page.
+ReactDOM.render(<App></App>, document.querySelector('.container'));
