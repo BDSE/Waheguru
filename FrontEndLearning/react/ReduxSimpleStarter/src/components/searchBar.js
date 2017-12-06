@@ -21,12 +21,9 @@ class SearchBar extends React.Component {
             </div>
         );
     }
-
     onInputChange(event) {
         this.setState({ searchText: event.target.value })
     }
-
-
 }
 
 export default SearchBar;
