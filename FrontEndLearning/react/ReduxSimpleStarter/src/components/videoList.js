@@ -17,13 +17,17 @@ class VideoList extends React.Component {
 
     render() {
         this.list = this.props.obj.videos.map((video) => {
-            return <VideoListItem key={video.etag} video={video} />
+            return (
+                <VideoListItem
+                    key={video.etag}
+                    video={video}
+                    onVideoSelect={this.props.onVideoSelect}
+                />
+            )
         }
         )
         return (
             <ul className="col-md-4 list-group" >
-                <li>{this.props.obj.videos.length}</li>
-                <li>{this.props.obj.test}</li>
                 {this.list}
             </ul>
         )

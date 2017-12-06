@@ -5,17 +5,17 @@ class commonPersonObj {
 }
 
 var Person = (function () {
-    
+
     var _privateVar = 20; //private variable.
-    
-    var _privateFunction = function(){
+
+    var _privateFunction = function () {
         return "I am a private JS function";
     }
-    
+
     class Person extends commonPersonObj {
-        
+
         constructor(name) {
-            
+
             super();
             this.name = name;
             this.age = _privateVar;
@@ -29,16 +29,16 @@ var Person = (function () {
             }
 
         }
-        
+
         sayHello() {
             console.log("Hello..", this.name);
         }
-        
+
         //this method uses the private function as there is no other way to use this proivate function
-        usePrivateFunction(){
+        usePrivateFunction() {
             _privateFunction();
         }
-        
+
         //this is how you can mimic encapsulation in js
         //getter and setter for the private variables
         getPrivateVar() {
@@ -49,9 +49,9 @@ var Person = (function () {
         }
 
     }
-    
+
     return Person;
-    
+
 })();
 
 var me = new Person("Amar");
@@ -63,3 +63,21 @@ me.a(); // this will out put hello.. wala ...
 
 me.setPrivateVar(34334);
 console.log("private variablle", me.getPrivateVar());
+
+/////////////////////////*******************/////////////////////////////
+function Obj() {
+    this.a = 10;
+    this.b = this.a + 454; //this is OK
+}
+
+var ob = new Obj
+
+var obj = {
+    a: 20,
+    b: this.a + 3 //but this is not OK
+    //b: function(){return this.a+3;} //right way to do it
+}
+
+console.log(obj.b());
+
+console.log(ob.b);
