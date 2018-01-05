@@ -56,7 +56,6 @@ class App extends React.Component {
         const videoSearch = _.debounce((searchText) => { this.videoSearch(searchText) }, 500);
         return (
             <div>
-
                 {this.teststate}
                 <SearchBar setStateWithSearchTextChange={videoSearch}
                     onSearchTextChange={(searchText) => {

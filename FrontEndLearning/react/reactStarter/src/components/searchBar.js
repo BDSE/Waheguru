@@ -18,13 +18,13 @@ class SearchBar extends React.Component {
         return (
             <div className="search-bar">
                 <input onChange={this.onInputChange.bind(this)} />
-                value of input: {this.props.searchText}
+                value of input: {this.state.searchText}
             </div>
         );
     }
     onInputChange(event) {
-
         var target = event.target;
+        this.setState({searchText: target.value});
         this.props.setStateWithSearchTextChange(target.value); //call new search....see index.js
     }
 }
