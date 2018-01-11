@@ -24,14 +24,14 @@ class App extends React.Component {
     //
     constructor(props) {
         super(props);
-
+            
         this.state = {
             videos: [],
             test: "amar",
             selectedVideo: null,
             searchText: 'puppies'
         };
-        this.handleYoutubeResults = this.handleYoutubeResults.bind(this);
+       // this.handleYoutubeResults = this.handleYoutubeResults.bind(this);
         this.teststate = this.state.test;
         //this method makes a api call...
         //there is a question though, where should we make the search
@@ -43,7 +43,7 @@ class App extends React.Component {
         YTSearch({ key: API_KEY, term: searchText }, this.handleYoutubeResults);
     }
 
-    handleYoutubeResults(videos) {
+    handleYoutubeResults = (videos) => {
         this.setState({
             videos: videos,
             test: "sandhu",
