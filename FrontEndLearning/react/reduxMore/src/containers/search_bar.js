@@ -1,10 +1,10 @@
-import React , { Component } from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchDataFromApi } from '../actions/index';
 
-class SearchBar extends Component{
-    constructor(props){
+class SearchBar extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             searchTerm: ''
@@ -13,21 +13,20 @@ class SearchBar extends Component{
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
-    onInputChange(event){
-        this.setState({searchTerm: event.target.value});
+    onInputChange(event) {
+        this.setState({ searchTerm: event.target.value });
     }
 
-    onFormSubmit(event){
+    onFormSubmit(event) {
         event.preventDefault();
         this.props.fetchDataFromApi(this.state.searchTerm);
-        this.setState({searchTerm: ''});
-
+        this.setState({ searchTerm: '' });
     }
 
-    render(){
+    render() {
         return (
             <form className="input-group" onSubmit={this.onFormSubmit}>
-                <input className="search-bar form-control" placeholder="Get a five day forecast" value={this.state.searchTerm} onChange={this.onInputChange}/>
+                <input className="search-bar form-control" placeholder="Get a five day forecast" value={this.state.searchTerm} onChange={this.onInputChange} />
                 <span className="input-group-btn">
                     <button type="submit" className="btn btn-secondary">Submit</button>
                 </span>
@@ -36,8 +35,8 @@ class SearchBar extends Component{
     }
 }
 
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({fetchDataFromApi}, dispatch)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ fetchDataFromApi }, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(SearchBar);
+export default connect(null, mapDispatchToProps)(SearchBar);
