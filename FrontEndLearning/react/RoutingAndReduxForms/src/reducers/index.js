@@ -4,7 +4,8 @@ import PostReducer from './post_reducer';
 
 const rootReducer = combineReducers({
  posts: PostReducer,
- form: formReducer
+ form: formReducer,
+ test: "Amar"
 });
 
 export default rootReducer;
