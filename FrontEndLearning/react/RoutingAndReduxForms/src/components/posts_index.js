@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchPosts } from '../actions';
+import TestComponent from './test';
 import _ from 'lodash';
 
 class PostsIndex extends Component{
 
     componentDidMount(){
+        console.log("compnent did mount from post_index");
         this.props.fetchPosts();
     }
 
@@ -37,6 +39,7 @@ class PostsIndex extends Component{
                 </div>
                 <p>Home Page</p>
                 <ul className="list-group">{this.renderPosts()}</ul>
+                <TestComponent />
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Sparklines, SparklinesLine, SparklinesReferenceLine} from 'react-sparklines';
+import {Sparklines, SparklinesLine, SparklinesSpots} from 'react-sparklines';
+import { Highcharts } from 'highcharts';
 
 class Chart extends Component{
     constructor(props){
@@ -13,13 +14,12 @@ class Chart extends Component{
         return (
             <div>
                  <Sparklines height={120} width={180} data={this.props.data}>
-                   <SparklinesLine color={this.props.color} />
-                   <SparklinesReferenceLine type="avg" />
+                   <SparklinesLine color={this.props.color} style={{ fill: "none" }}/>
+                   <SparklinesSpots />
                 </Sparklines>
                 <div>{this.average(this.props.data)}</div>
             </div>
         )
     }
 }
-
 export default Chart;

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 class PostShow extends Component {
     componentDidMount() {
-        console.log("componentDidMount......",this.props.post);
+        console.log("componentDidMount......",this.props.match);
             this.props.fetchPost(this.props.match.params.id);
     }
     onDeleteClick(){
@@ -16,7 +16,7 @@ class PostShow extends Component {
     }
 
     render() {
-        console.log("render........",this.props.post);
+        console.log("render........(props)",this.props);
         if (!this.props.post) {
             return (
                 <div>....loading</div>
