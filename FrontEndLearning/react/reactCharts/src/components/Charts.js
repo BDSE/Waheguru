@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import Dot from './dot';
+import RectangleArea from './rectangleArea';
 import {
     ResponsiveContainer,
     LineChart,
@@ -8,16 +9,27 @@ import {
      XAxis,
      YAxis,
      ReferenceArea,
+     ReferenceLine,
      Tooltip,
      Label
     } from 'recharts';
+import Rectangle from 'recharts/lib/shape/Rectangle';
 
 class Chart extends Component{
     constructor(props){
         super(props);
     }
-
+    getDataMaxVal(data, key){
+        const arr = data.map((x) => {
+            return x[key]
+        })
+      return Math.max(...arr);
+    }
     render () {
+        const yAxisDataKey = "amt",
+              xAxisDataKey = "name",
+              rangeMax = 2500,
+              rangeMin = 900;
         const data = [
             {name: 'Page A',  amt: 1400},
             {name: 'Page B',  amt: 710},
@@ -27,17 +39,17 @@ class Chart extends Component{
             {name: 'Page F',  amt: 1300},
             {name: 'Page G',  amt: 1800},
       ];
+      const dataMaxVal = this.getDataMaxVal(data, "amt");
       return (
           <ResponsiveContainer width="100%" height={500}>
             <LineChart data={data}>
-                <XAxis dataKey="name" padding={{left: 20}} tick={false} stroke="red" >
+                <XAxis dataKey={xAxisDataKey}  tick={false} padding={{left:20,right:20}} stroke="red" >
                     <Label value="Date Here" offset={0} position="insideBottomLeft" />
                     <Label value="Date Here" offset={0} position="insideBottomRight" />
                 </XAxis>
-                <YAxis type="number" width={80}  ticks={[900, 2500]} tickMargin={5} tickSize={0} padding={{ bottom: 20 }} stroke="red"/>
-                <Tooltip/>
-                <Line type="monotone" dataKey="amt" stroke="#8884d8" activeDot={{r: 8}} strokeWidth="3" dot={<Dot rangeMax={2500} rangeMin={900}/>}/>
-                <ReferenceArea  y1={900} y2={2500} fill="blue" fillOpacity={0.1} />
+                <Tooltip />
+                <YAxis type="number" dataKey={yAxisDataKey} domain={[0, 'dataMax']} ticks={[rangeMax, rangeMin]} tickSize={0} padding={{ bottom: 20, top:20}} stroke="red" tick={<RectangleArea rangeMax={rangeMax} rangeMin={rangeMin} dataMaxVal={dataMaxVal}/>}/>
+                <Line type="monotone" dataKey="amt" stroke="#8884d8" strokeWidth="3" dot={<Dot rangeMax={rangeMax} rangeMin={rangeMin}/>}/>
             </LineChart>
           </ResponsiveContainer>
       );
