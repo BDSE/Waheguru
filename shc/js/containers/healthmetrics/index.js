@@ -4,6 +4,7 @@ import { healthmetricsReverseData, healthmetricsSearch } from '../../actions_old
 import Main from './main';
 import Graph from './graph';
 import List from './list';
+import Util from '../../services/Util';
 
 class VitalsAndResults extends Component{
     constructor(props) {
@@ -11,16 +12,20 @@ class VitalsAndResults extends Component{
         this.infoDot = this.infoDot.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
         this.searchTestResults = this.searchTestResults.bind(this);
-        this.changeView = this.changeView.bind(this);
         this.state = {
             ready: false,
-            view: 'main',
+            view: '',
             selectedTest: {
                 name: "",
                 data: {}
             }
         };
     }
+
+    componentDidMount(){
+        
+    }
+    
     infoDot() {
         const { dispatch } = this.props;
         const modalContent = {
@@ -51,64 +56,49 @@ class VitalsAndResults extends Component{
         };
         dispatch(openModal({}, modalContent));
     }
+
     searchTestResults(text){
         const { dispatch } = this.props;
         dispatch(healthmetricsSearch(this.props.healthmetrics, text, 'name'));
     }
+
     changeOrder(){
         const { dispatch } = this.props;
         dispatch(healthmetricsReverseData(this.props.healthmetrics));
     }
-    getSelectedTestData(testName){
-        const { healthmetrics } = this.props.healthmetrics;
-        for(let id in healthmetrics){
-            if(healthmetrics[id].name === testName){
-                return healthmetrics[id];
-            }
-        }
-    }
-    changeView(view, testName=""){
-        let data = {};
-        if(testName){
-             data = this.getSelectedTestData(testName);
-        }
-        this.setState(
-            {
-                view: view,
-                selectedTest: {
-                    name: testName,
-                    data: data
-                }
-            }
-        );
-        window.scrollTo(0,0);
-    }
-    renderView(view){
-        switch(view) {
-            case 'graph':
-            return (<Graph data={this.state.selectedTest.data} changeView={this.changeView} />);
-            case 'list':
-            return (<List data={this.state.selectedTest.data} changeView={this.changeView} />);
-            default:
-            return (<Main data= {this.props.healthmetrics} changeOrder={this.changeOrder} searchTestResults={this.searchTestResults} changeView={this.changeView} />);
-        }
-    }
-    render(){
-        //deep link implement from here.
-        console.log("indexjs....", this.props);
+
+    renderView(){
+        const { healthmetrics } = this.props;
         const paramsObj = (this.props.match.params) ? this.props.match.params : {
             mode: "healthmetrics",
-            submode: "main",
-            params: ""
+            submode: undefined,
+            params: undefined
         };
-        const { mode, submode, params } = paramsObj;
-        ////
+        let { mode, submode, params } = paramsObj;
+        let data = {};
+        if(params && healthmetrics){
+            params = Util.hexDecode(params);
+            data = Util.selectObjectFromArray('name', params, healthmetrics.healthmetrics);
+        }
+        switch(submode) {
+            case 'graph':
+            return (<Graph data={data} />);
+            case 'list':
+            return (<List data={data} />);
+            default:
+            return (<Main data= {healthmetrics} changeOrder={this.changeOrder} searchTestResults={this.searchTestResults} />);
+        }
+    }
+
+    render(){
+        console.log("HealthMetrics: index: props: ",this.props);
+        
         return(
             <div className="healthmetrics test-results">
                 <div className="info-icon" onClick={ this.infoDot }>
                     <img src={ SHC.config.resourceHost + "/resources/images/MyHealth_Icons_Information.svg" } width="25" height="24" alt="" />
                 </div>
-                {this.renderView(this.state.view)}
+                {this.renderView()}
             </div>
         );
     }

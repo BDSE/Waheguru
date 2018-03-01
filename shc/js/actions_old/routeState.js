@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import Util from '../services/Util';
 import ApiCalls from '../services/ApiCalls';
 
 export const REQUEST_STATE = 'REQUEST_STATE';
@@ -11,6 +12,8 @@ export const initialState = {
     dataAttribute: ['getUserData']
 };
 
+const todate = Util.formatDate(new Date().getTime(), 'yy-mm-dd');
+
 export const ALL_STATES = {
     'home': {
         name: 'Home',
@@ -20,7 +23,8 @@ export const ALL_STATES = {
     'schedule': {
         name: 'Schedule',
         tab: true,
-        dataAttribute: false
+        dataAttribute: ['schedule'],
+        dataParams: [{ key: 'date', date: 'match.params.params || "' + todate + '"' }]
     },
     'careteam': {
         name: 'Care Team',

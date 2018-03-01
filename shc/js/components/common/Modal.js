@@ -10,20 +10,20 @@ class Modal extends Component {
     }
 
     defaultCloseButton (){
-        if(this.props.modalParams.defaultCloseButton) {
-            return (
-                <div className="defaultCloseButton" onClick={ this.props.closeModal }></div>
-            );
-        }
+        return this.props.modalParams.defaultCloseButton ? (
+            <div className="defaultCloseButton" onClick={ this.props.closeModal }></div>
+        ) : false;
     }
 
     render() {
+        let baseName = 'modal-dialog' + (this.props.modalParams.baseClassName ? ' ' + this.props.modalParams.baseClassName : '');
+
         return (
             <ReactModal
                 isOpen={ true }
                 onRequestClose={ this.props.closeModal }
                 className={{
-                    base: 'modal-dialog',
+                    base: baseName,
                     afterOpen: '',
                     beforeClose: ''
                 }}

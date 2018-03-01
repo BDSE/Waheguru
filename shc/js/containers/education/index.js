@@ -15,14 +15,19 @@ class Education extends Component {
         this.content = this.content.bind(this);
         this.submodes = ['summary', 'topic', 'point'];
 
-        let thisKey = this.getKeyValue(),
+        let encounterNumber = this.getEncounter(),
+            thisKey = this.getKeyValue(),
             keyArray = thisKey ? thisKey.split('^') : [];
 
         this.state = {
+            encounterNumber: encounterNumber,
             keyValue: thisKey,
             submode: this.getSubmode(keyArray),
             education: props.education,
             gotoSubmode: this.gotoSubmode,
+            closeModal: this.props.closeModal,
+            dispatch: this.props.dispatch,
+            updateState: props.updateState,
             history: props.history
         };
     }
@@ -39,6 +44,7 @@ class Education extends Component {
 
         if(this.state.submode !== thisSubmode || this.state.keyValue !== thisKey) {
             this.setState({
+                encounterNumber: this.getEncounter(),
                 submode: thisSubmode,
                 keyValue: thisKey
             });
@@ -76,26 +82,26 @@ class Education extends Component {
         }
     }
 
-    getKeyValue(){
+    getParam(index){
         const { params } = this.props;
 
-        let thisKey = undefined;
+        let result;
 
         if(params){
-            let param = params.split('&');
+            let param = params.split('/');
 
-            if(param.length){
-                param.map(item => {
-                    let keyValue = item.split('=');
-
-                    if(keyValue.length === 2 && keyValue[0] === 'key'){
-                        thisKey = keyValue[1];
-                    }
-                });
-            }
+            result = param[index];
         }
 
-        return thisKey;
+        return result;
+    }
+
+    getEncounter(){
+        return this.getParam(0);
+    }
+
+    getKeyValue(){
+        return this.getParam(1);
     }
 
     isValidPoint(topic, keyArray){
@@ -107,6 +113,10 @@ class Education extends Component {
                     valid = true;
                 }
             });
+
+            if(!valid && keyArray[2] < topic.point.length){
+                valid = true;
+            }
         }
 
         return valid;
@@ -125,6 +135,10 @@ class Education extends Component {
                     }
                 }
             });
+
+            if(!valid && keyArray[1] < title.topic.length){
+                valid = true;
+            }
         }
 
         return valid;
@@ -154,7 +168,9 @@ class Education extends Component {
         if(keyArray.length > 0){
             if(this.state.education && this.state.education.response && this.state.education.response.encounter && this.state.education.response.encounter.length) {
                 this.state.education.response.encounter.map(encounter => {
-                    valid = this.isValidTitle(encounter, keyArray);
+                    if(!this.state.encounterNumber || this.state.encounterNumber === encounter.encounterNumber) {
+                        valid = this.isValidTitle(encounter, keyArray);
+                    }
                 });
             }
         }

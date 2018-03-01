@@ -43,15 +43,27 @@ class Chart extends Component{
             return false;
         }
     }
-    
-    renderTooltip(){
-       // console.log("amar");
 
-    }
     render () { 
-        const { axisColor, yAxisDataKey, xAxisDataKey, referenceAreaMax, referenceAreaMin, normalStrokeCol, abnormalStrokeCol, data, xAxisLabelArr, selectReading} = this.props,
-                axisPadding = 30,
-                maxMinArr = Util.getDataMaxMinVal(data, yAxisDataKey);
+        const { 
+                axisColor, 
+                yAxisDataKey, 
+                xAxisDataKey, 
+                referenceAreaMax, 
+                referenceAreaMin, 
+                normalStrokeCol, 
+                abnormalStrokeCol, 
+                data, 
+                xAxisLabelArr, 
+                showReadingToolTIp, 
+                clearToolTip, 
+                selectedData, 
+                isDot
+            } = this.props,
+                maxMinArr = Util.getDataMaxMinVal(data, yAxisDataKey),
+                isRefArea = (referenceAreaMax && referenceAreaMin);
+
+            let axisPadding = this.props.axisPadiing || 30;
 
       return (
           <ResponsiveContainer width="100%" height={500}>
@@ -60,21 +72,34 @@ class Chart extends Component{
                     <Label value={(xAxisLabelArr && xAxisLabelArr.length != 0) ? xAxisLabelArr[0] : " "} offset={0} position="insideBottomLeft" />
                     <Label value={(xAxisLabelArr && xAxisLabelArr.length != 0) ? xAxisLabelArr[1] : " "} offset={0} position="insideBottomRight" />
                 </XAxis>
-                <Tooltip/>
                 <YAxis 
                     type="number"
                     dataKey={yAxisDataKey}
-                    domain={(referenceAreaMax && referenceAreaMin) ? ['dataMin', 'dataMax'] : [0, 'dataMax']}
-                    ticks={(referenceAreaMax && referenceAreaMin) ? [referenceAreaMax, referenceAreaMin] : [0, maxMinArr[1]] }
+                    domain={isRefArea ? ['dataMin', 'dataMax'] : [0, 'dataMax']}
+                    ticks={isRefArea ? [referenceAreaMax, referenceAreaMin] : [0, maxMinArr[1]] }
                     tickSize={0}
                     padding={{ bottom: axisPadding, top:axisPadding}}
                     stroke={axisColor? axisColor : "black"}
-                    tick={(referenceAreaMax && referenceAreaMin) ? <RectangleArea referenceAreaMax={referenceAreaMax} referenceAreaMin={referenceAreaMin} dataMinVal={maxMinArr[0]} dataMaxVal={maxMinArr[1]} padding={axisPadding} fillColor={normalStrokeCol} /> : true}
+                    tick={isRefArea ? <RectangleArea referenceAreaMax={referenceAreaMax} referenceAreaMin={referenceAreaMin} dataMinVal={maxMinArr[0]} dataMaxVal={maxMinArr[1]} padding={axisPadding} fillColor={normalStrokeCol} /> : true}
                 />
                     
                 {this.renderGradient(referenceAreaMax, referenceAreaMin, normalStrokeCol, abnormalStrokeCol, maxMinArr)}
 
-                <Line type="monotone" dataKey="numericValue" stroke={(referenceAreaMax && referenceAreaMin) ? 'url(#lineColor)' : normalStrokeCol} strokeWidth="5" dot={<Dot selectReading={selectReading} referenceAreaMax={referenceAreaMax} referenceAreaMin={referenceAreaMin} normalStrokeCol={normalStrokeCol} abnormalStrokeCol={abnormalStrokeCol} radius="12"/>}/>
+                <Line type="monotone" dataKey="numericValue" stroke={isRefArea ? 'url(#lineColor)' : normalStrokeCol} strokeWidth="5" 
+                dot={
+                    isDot ? 
+                    <Dot 
+                        showReadingToolTIp={showReadingToolTIp}
+                        clearToolTip={clearToolTip}
+                        referenceAreaMax={referenceAreaMax} 
+                        referenceAreaMin={referenceAreaMin} 
+                        normalStrokeCol={normalStrokeCol} 
+                        abnormalStrokeCol={abnormalStrokeCol} 
+                        selectedData={selectedData}
+                        radius="12"
+                    /> : false
+                }
+                />
             </LineChart>
           </ResponsiveContainer>
       );

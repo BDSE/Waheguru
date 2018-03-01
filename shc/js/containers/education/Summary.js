@@ -14,11 +14,11 @@ class Summary extends Component {
     }
 
     titleContent(props){
-        const { title } = props;
+        const { encounter, title } = props;
 
         return (
             <td className="title">
-                <NavLink to={ '/education/topic/key=' + title.key }>{ title.displayText.toLowerCase() }<ItemCount num={ title.topic.length } /></NavLink><ReadOnly readOnly={ title.readOnly } />
+                <NavLink to={ '/education/topic/' + encounter.encounterNumber + '/' + title.key }>{ title.displayText.toLowerCase() }<ItemCount num={ title.topic.length } /></NavLink><ReadOnly readOnly={ title.readOnly } />
             </td>
         );
     }
@@ -44,12 +44,12 @@ class Summary extends Component {
                         <tbody>
                         { encounters.map(encounter =>
                             encounter.title.map(title =>
-                            <tr key={ encounter.encounterNumber }>
+                            <tr key={ title.key }>
                                 <td className="status">
                                     <div className={"image " + title.status }></div>
                                 </td>
                                 <td className="date"><Moment format="MM/DD/YYYY">{ new Date(encounter.date) }</Moment></td>
-                                <this.titleContent title={ title } />
+                                <this.titleContent encounter={ encounter } title={ title } />
                                 <td className="provider-name">{ title.provider.name }</td>
                             </tr>
                             )

@@ -8,20 +8,8 @@ class Main extends Component{
         super(props);
         this.changeOrder = this.changeOrder.bind(this);
         this.searchTestResults = this.searchTestResults.bind(this);
-        this.handleClickOnTable = this.handleClickOnTable.bind(this);
     }
 
-    changeView(ele){
-        let eleValue = ele.html();
-        let view = ele.attr('view');
-        this.props.changeView(view, eleValue);
-    }
-    handleClickOnTable(e){
-        const ele = $(e.target);
-        if(ele.hasClass('result-name')){
-            this.changeView(ele);
-        }
-    }
     changeOrder(e){
         let value = e.target.getAttribute("value");
         let dropDownText = document.getElementById("changeOrder").innerHTML;
@@ -42,7 +30,6 @@ class Main extends Component{
         }
     }
     render(){
-        console.log("main...", this.props);
         const { healthmetrics } = this.props.data;
         return(
            <div>
@@ -81,7 +68,7 @@ class Main extends Component{
                                         <th className="result">Result</th>
                                     </tr>
                                 </thead>
-                                <tbody onClick={this.handleClickOnTable}>
+                                <tbody>
                                         {healthmetrics.map(testData => (
                                             <GenerateTable testData={ testData } key={`${testData.name}:${testData.lastRecorded}`} />
                                         ))}

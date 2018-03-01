@@ -39,11 +39,21 @@ function getData (state, params){
                 responses = {},
                 hasError = false;
 
-            state.dataAttribute.map(dataAttribute => {
+            state.dataAttribute.map((dataAttribute, index) => {
                 if (typeof ApiCalls[dataAttribute] === 'function') {
-                    promises.push(ApiCalls[dataAttribute](params).then(response => {
+                    let param = params && params.length > index ? params[index] : {},
+                        key = param && param.key ? param[param.key] : false;
+
+                    promises.push(ApiCalls[dataAttribute](param).then(response => {
                         if (response && !response.error) {
-                            responses[dataAttribute] = response;
+                            if(key){
+                                responses[dataAttribute] = {
+                                    [key]: response
+                                };
+                                responses.dataParams = param;
+                            }else {
+                                responses[dataAttribute] = response;
+                            }
                         } else {
                             hasError = true;
                             dispatch(invalidData(state));
@@ -65,12 +75,15 @@ function getData (state, params){
     };
 }
 
-function shouldFetchData (state) {
+function shouldFetchData (state, params) {
     let dataAttributes = [];
 
     if(state.dataAttribute && state.dataAttribute.length){
-        state.dataAttribute.map(dataAttribute => {
-            if(!state[dataAttribute]){
+        state.dataAttribute.map((dataAttribute, index) => {
+            let param = params && params.length > index ? params[index] : false,
+                key = param && param.key ? param[param.key] : false;
+
+            if(!state[dataAttribute] || (key && !state[dataAttribute][key])){
                 dataAttributes.push(dataAttribute);
             }
         });
@@ -85,7 +98,7 @@ function shouldFetchData (state) {
 
 export function fetchDataIfNeeded (state, params){
     return (dispatch) => {
-        let dataAttributes = shouldFetchData(state);
+        let dataAttributes = shouldFetchData(state, params);
         if(dataAttributes && dataAttributes.length){
             return dispatch(getData({
                 dataAttribute: dataAttributes

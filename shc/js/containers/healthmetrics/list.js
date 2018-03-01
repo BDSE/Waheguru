@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 import Util from '../../services/Util';
 
 class List extends Component{
         constructor(props){
             super(props);
-            this.backToMainPage = this.backToMainPage.bind(this);
             this.handleClickOnTable = this.handleClickOnTable.bind(this);
         }
     
-        backToMainPage(){
-            this.props.changeView('main');
-        }
         generateTable(testResult){
             const dateMillSecs = testResult.timeRecorded,
                   result = testResult.readingValue ? testResult.readingValue : " ",
@@ -77,28 +74,40 @@ class List extends Component{
         }
         render(){
             const { name, allReadings } = this.props.data;
-            return(
-                <div className="list">
-                    <div className="title">
-                        <h1>{name}</h1>
+
+            if(allReadings){
+                return(
+                    <div className="list">
+                        <div className="title">
+                            <h1>{name}</h1>
+                        </div>
+                        <div className="info-text">Click on a result to view more information.</div>
+                        <div className="rigel-table">
+                            <table className="healthmetrics-table list">
+                                <thead>
+                                    <tr>
+                                        <th className="date">date</th>
+                                        <th className="result">result</th>
+                                    </tr>
+                                </thead>
+                                <tbody onClick={this.handleClickOnTable}>
+                                    {allReadings.map(this.generateTable)}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="to-mainpage">
+                            <NavLink to="/healthmetrics">&#171; Back to The Results List</NavLink>
+                        </div>
                     </div>
-                    <div className="info-text">Click on a result to view more information.</div>
-                    <div className="rigel-table">
-                        <table className="healthmetrics-table list">
-                            <thead>
-                                <tr>
-                                    <th className="date">date</th>
-                                    <th className="result">result</th>
-                                </tr>
-                            </thead>
-                            <tbody onClick={this.handleClickOnTable}>
-                                {allReadings.map(this.generateTable)}
-                            </tbody>
-                        </table>
+                );
+            }else{
+                return(
+                    <div>
+                        <div className="info">No readings found.</div>
+                        <NavLink to="/healthmetrics">&#171; Back to The Results List</NavLink>
                     </div>
-                    <a onClick={this.backToMainPage}>&#171; Back to The Results List</a>
-                </div>
-            );
+                  );
+            }
         }
 }
 

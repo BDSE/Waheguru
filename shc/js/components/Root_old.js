@@ -7,7 +7,7 @@ import App from '../containers/App_old';
 const Root = ({ store }) => (
     <Provider store={ store }>
         <HashRouter>
-            <Route path="/:mode?/:submode?/:params?" component={ App } />
+            <Route path="/:mode?/:submode?/:params*" component={ App } />
         </HashRouter>
     </Provider>
 );

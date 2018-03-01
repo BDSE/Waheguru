@@ -19,11 +19,19 @@ class Topic extends Component {
     }
 
     topicContent(props){
-        const { topic } = props;
+        const { topic, index } = props;
+
+        let displayText = topic.displayText ? topic.displayText.toLowerCase() : "(No Topic Name)",
+            keyValue = topic.key || this.data.title.key + '^' + index;
 
         return (
             <td className="title">
-                <NavLink to={ '/education/point/key=' + topic.key }>{ topic.displayText.toLowerCase() }<ItemCount num={ topic.point.length } /></NavLink><ReadOnly readOnly={ topic.readOnly } />
+            { topic.point && topic.point.length ? (
+                <NavLink to={ '/education/point/' + this.props.encounterNumber + '/' + keyValue }>{ displayText }<ItemCount num={ topic.point.length } /></NavLink>
+            ) : (
+                <span>{ displayText }<ItemCount num={ topic.point.length } /></span>
+            ) }
+                <ReadOnly readOnly={ topic.readOnly } />
             </td>
         );
     }
@@ -52,13 +60,13 @@ class Topic extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                        { this.data.title.topic.map(topic =>
-                            <tr key={ topic.key }>
+                        { this.data.title.topic.map((topic, index) =>
+                            <tr key={ topic.key || index }>
                                 <td className="status">
                                     <div className={"image " + topic.status }></div>
                                 </td>
                                 <td className="date"><Moment format="MM/DD/YYYY">{ new Date(this.data.encounter.date) }</Moment></td>
-                                <this.topicContent topic={ topic } />
+                                <this.topicContent topic={ topic } index={ index } />
                                 <td className="provider-name">{ this.data.title.provider.name }</td>
                             </tr>
                         )}
@@ -83,12 +91,14 @@ class Topic extends Component {
         const { keyValue } = this.props;
 
         encounters.map(encounter => {
-            encounter.title.map(title => {
-                if(title.key && keyValue.indexOf(title.key) === 0){
-                    this.data.encounter = encounter;
-                    this.data.title = title;
-                }
-            });
+            if(!this.props.encounterNumber || this.props.encounterNumber === encounter.encounterNumber) {
+                encounter.title.map(title => {
+                    if (title.key && keyValue.indexOf(title.key) === 0) {
+                        this.data.encounter = encounter;
+                        this.data.title = title;
+                    }
+                });
+            }
         });
 
         return (

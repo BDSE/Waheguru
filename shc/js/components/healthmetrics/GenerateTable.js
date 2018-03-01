@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 import Util from '../../services/Util';
 import SmallGraph from './smallGraph';
@@ -31,12 +32,13 @@ class GenerateTable extends Component {
 
     renderName(){
         const { testData } = this.props,
-            view = testData.isGraphable ? 'graph': 'list';
+            view = testData.isGraphable ? 'graph': 'list',
+            nameInHex = Util.hexCode(testData.name);
 
         if(this.showColumns.indexOf('name') !== -1){
             return (
                 <td className="name">
-                    <a className="result-name" view={view}>{testData.name}</a>
+                    <NavLink to={`/healthmetrics/${view}/${nameInHex}`} className="result-name">{testData.name}</NavLink>
                 </td>
             );
         }else{

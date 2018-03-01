@@ -26,6 +26,7 @@ import Education from './education';
 class App extends Component {
     constructor(props) {
         super(props);
+        this.updateState = this.updateState.bind(this);
         this.gotoState = this.gotoState.bind(this);
         this.content = this.content.bind(this);
         this.showModal = this.showModal.bind(this);
@@ -35,8 +36,11 @@ class App extends Component {
             submode: undefined,
             params: undefined,
             logout: this.logout,
+            updateState: this.updateState,
+            gotoState: this.gotoState,
             gotoOutPatient: this.gotoOutPatient,
             closeModal: this.closeModal,
+            dispatch: this.props.dispatch,
             ready: false
         };
     }
@@ -52,11 +56,17 @@ class App extends Component {
             if(invalidUserSession) {
                 this.invalidSession();
             } else if(this.state.mode !== mode || this.state.submode !== submode || this.state.params !== params || modalIsOpen !== this.state.modalIsOpen) {
-                let thisData = {};
+                let thisData = this.state[dataAttribute] ? {
+                    [dataAttribute]: this.state[dataAttribute]
+                } : {};
 
                 if(!invalidData && dataAttribute && dataAttribute.length) {
                     dataAttribute.map(attr => {
-                        thisData[attr] = data[attr];
+                        if(thisData[attr] && data.dataParams && data.dataParams.key && data.dataParams[data.dataParams.key]){
+                            $.extend(thisData[attr], data[attr]);
+                        }else {
+                            thisData[attr] = data[attr];
+                        }
                     });
                 }
 
@@ -78,7 +88,7 @@ class App extends Component {
                         submode: match.params.submode,
                         params: match.params.params
                     }),
-                    dataParams = stateParams.params ? eval('this.state.' + stateParams.params) : {},
+                    dataParams = [],
                     dataAttributes = stateParams.dataAttribute;
 
                 if(dataAttributes && dataAttributes.length){
@@ -86,6 +96,19 @@ class App extends Component {
                         if (this.state[dataAttribute]) {
                             stateParams[dataAttribute] = this.state[dataAttribute];
                         }
+                    }, this);
+                }
+                if(stateParams.dataParams && stateParams.dataParams.length){
+                    stateParams.dataParams.map((dataParam) => {
+                        let newParam = {};
+                        Object.keys(dataParam).map((key) => {
+                            if(key !== 'key' && dataParam[key].indexOf('.') !== -1){
+                                newParam[key] = eval(dataParam[key]);
+                            }else{
+                                newParam[key] = dataParam[key];
+                            }
+                        }, this);
+                        dataParams.push(newParam);
                     }, this);
                 }
                 dispatch(fetchDataIfNeeded(stateParams, dataParams));
@@ -106,6 +129,10 @@ class App extends Component {
             window.s.usePlugins = true;
             window.s.doPlugins = s_doPlugins;
         }
+    }
+
+    updateState (params){
+        this.setState(params);
     }
 
     gotoState (state){
@@ -152,18 +179,14 @@ class App extends Component {
             case 'education':
                 return <Education { ...this.state } />;
             default:
-                return '';
+                return false;
         }
     }
 
     showModal() {
-        if (this.state.modalIsOpen){
-            return (
-                <Modal { ...this.state } />
-            );
-        }else{
-            return '';
-        }
+        return this.state.modalIsOpen ? (
+            <Modal { ...this.state } />
+        ) : false;
     }
 
     closeModal() {
