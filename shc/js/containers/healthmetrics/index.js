@@ -9,6 +9,7 @@ import Util from '../../services/Util';
 class VitalsAndResults extends Component{
     constructor(props) {
         super(props);
+        this.HEALTHMETRICS_COMMENTS_ATTR = 'healthmetricsComments';
         this.infoDot = this.infoDot.bind(this);
         this.changeOrder = this.changeOrder.bind(this);
         this.searchTestResults = this.searchTestResults.bind(this);
@@ -68,7 +69,7 @@ class VitalsAndResults extends Component{
     }
 
     renderView(){
-        const { healthmetrics } = this.props;
+        const { healthmetrics, dispatch, partialData } = this.props;
         const paramsObj = (this.props.match.params) ? this.props.match.params : {
             mode: "healthmetrics",
             submode: undefined,
@@ -82,17 +83,16 @@ class VitalsAndResults extends Component{
         }
         switch(submode) {
             case 'graph':
-            return (<Graph data={data} />);
+            return (<Graph data={data} dispatch={dispatch} partialData={partialData}/>);
             case 'list':
-            return (<List data={data} />);
+            return (<List data={data} dispatch={dispatch} partialData={partialData}/>);
             default:
             return (<Main data= {healthmetrics} changeOrder={this.changeOrder} searchTestResults={this.searchTestResults} />);
         }
     }
 
     render(){
-        console.log("HealthMetrics: index: props: ",this.props);
-        
+        console.log("index: healthmetrics: props", this.props);
         return(
             <div className="healthmetrics test-results">
                 <div className="info-icon" onClick={ this.infoDot }>

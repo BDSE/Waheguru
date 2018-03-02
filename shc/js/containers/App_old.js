@@ -74,7 +74,6 @@ class App extends Component {
 
                 state.submode = submode;
                 state.params = params;
-
                 this.setState(state);
             } else if (!invalidData && !invalidState && match.params.mode && mode !== match.params.mode || !match.params.mode && mode !== 'home' || match.params.submode !== submode || match.params.params !== params) {
                 this.gotoState({
@@ -91,13 +90,6 @@ class App extends Component {
                     dataParams = [],
                     dataAttributes = stateParams.dataAttribute;
 
-                if(dataAttributes && dataAttributes.length){
-                    dataAttributes.map(dataAttribute => {
-                        if (this.state[dataAttribute]) {
-                            stateParams[dataAttribute] = this.state[dataAttribute];
-                        }
-                    }, this);
-                }
                 if(stateParams.dataParams && stateParams.dataParams.length){
                     stateParams.dataParams.map((dataParam) => {
                         let newParam = {};
@@ -165,6 +157,8 @@ class App extends Component {
     }
 
     content() {
+        console.log("appold: props: ",this.props);
+        
         switch (this.state.mode) {
             case 'home':
                 return <Home { ...this.state } />;
@@ -173,7 +167,7 @@ class App extends Component {
             case 'careteam':
                 return <CareTeam { ...this.state } />;
             case 'healthmetrics':
-                return <HealthMetrics { ...this.state } />;
+                return <HealthMetrics { ...this.state } partialData={this.props.partialData}/>;
             case 'medications':
                 return <Medications { ...this.state } />;
             case 'education':
@@ -251,9 +245,11 @@ const mapStateToProps = (state) => {
     const {
         isFetching,
         invalidData,
-        data
+        data,
+        partialData
     } = getData || {
-        isFetching: true
+        isFetching: true,
+        partialData: {}
     };
     const {
         modalParams,
@@ -275,7 +271,8 @@ const mapStateToProps = (state) => {
         invalidState,
         invalidUserSession,
         modalParams,
-        modalIsOpen
+        modalIsOpen,
+        partialData
     };
 };
 

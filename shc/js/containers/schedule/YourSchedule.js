@@ -67,6 +67,7 @@ class YourSchedule extends Component {
             <div className="your-schedule">
                 <div className="side-nav col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <Calendar
+                        calendarType="US"
                         onChange={this.onChangeDate}
                         value={this.state.date}
                         nextLabel="&raquo;"

@@ -3,9 +3,12 @@ import $ from 'jquery';
 import {
     REQUEST_DATA,
     RECEIVE_DATA,
+    RECEIVE_PARTIAL_DATA,
+    RECEIVE_CACHED_DATA,
     INVALID_DATA,
     REQUEST_PROCESS_DATA,
-    RECEIVE_PROCESS_DATA
+    RECEIVE_PROCESS_DATA,
+    FINISH_RECEIVE_DATA
     } from '../actions_old';
 
 function fetchData(
@@ -26,6 +29,17 @@ function fetchData(
                 data: action.state.data,
                 lastUpdated: action.state.receivedAt
             });
+        case RECEIVE_CACHED_DATA:
+            return $.extend({}, state, {
+                invalidData: false,
+                data: action.state.data,
+                lastUpdated: action.state.receivedAt
+            });
+        case FINISH_RECEIVE_DATA:
+            return $.extend({}, state, {
+                isFetching: false,
+                invalidData: false
+            });
         case INVALID_DATA:
             return $.extend({}, state, {
                 isFetching: false,
@@ -34,6 +48,24 @@ function fetchData(
         default:
             return state;
     }
+}
+
+function mergePartialData(state, action){
+    let partialData = {};
+    if(state.partialData){
+        if(!state.partialData[action.state.dataAttribute]){
+            partialData = $.extend({}, state.partialData, action.state.data);
+        }else{
+            partialData = {
+                [action.state.dataAttribute]: $.extend({}, state.partialData[action.state.dataAttribute], action.state.data[action.state.dataAttribute])
+            };
+        }
+
+    }else{
+        partialData = action.state.data;
+    }
+
+    return partialData;
 }
 
 function getData(state = {}, action = {}) {
@@ -55,6 +87,15 @@ function getData(state = {}, action = {}) {
                 isFetching: true,
                 invalidData: false
             });
+        case RECEIVE_PARTIAL_DATA:
+
+            return $.extend({}, state, {
+                isFetching: false,
+                invalidData: false,
+                partialData: mergePartialData(state, action),
+                lastUpdated: action.state.receivedAt
+            });
+
         default:
             return state;
     }

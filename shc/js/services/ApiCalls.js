@@ -165,6 +165,19 @@ const ApiCalls = {
             }
             return response;
         });
+    },
+
+    healthmetricsComments: function (params){
+        let payload;
+        let key = "orderId";
+        if(typeof params === 'object'){
+            payload = params[key];
+        }else payload = params;
+        let url = OrionBedsideURL + '/labresultcomment',
+            data = {
+                [key]: payload
+            };
+        return this.makeCall(url, 'POST', data);
     }
 };
 

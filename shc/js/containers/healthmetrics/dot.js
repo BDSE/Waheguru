@@ -60,7 +60,6 @@ class Dot extends Component{
     }
 
     drawCircle(){
-        console.log(this.props);
         const { cx, cy, value, referenceAreaMax, referenceAreaMin, strokeWidth, abnormalStrokeCol, normalStrokeCol, width, height, radius, payload, selectedData} = this.props,
         { orderId } = payload || {orderId : ""};
         let color = "";

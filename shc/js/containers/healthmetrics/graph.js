@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Charts from './Charts';
 import Util from '../../services/Util';
+import { fetchPartialDataIfNeeded } from '../../actions_old';
 import $ from 'jquery';
 
 class Graph extends Component{
@@ -73,12 +74,16 @@ class Graph extends Component{
     }
 
     handleClickOnReading(target){
+        const { dispatch } = this.props;
         const orderId = target.attr('orderid') || '';
-        this.setState({
-            selectedReading:{
-                orderId:orderId
-            }
-        });
+        if(orderId !== this.state.selectedReading.orderId){
+            this.setState({
+                selectedReading:{
+                    orderId:orderId
+                }
+            });
+            dispatch(fetchPartialDataIfNeeded('healthmetricsComments', orderId));
+        }
     }
 
     handleClick(e){
@@ -101,18 +106,23 @@ class Graph extends Component{
     }
 
     render(){
+        console.log("graph: render: props: ", this.props);
         const axisColor = "#B9B8BD",
-              { data } = this.props,
+              { data, partialData } = this.props,
               { allReadings, rangeHigh, rangeLow, name } = data,
               dataForGraph = this.prepareDataForGraph(allReadings,"numericValue"),
               dateRangeArr = this.getHighestLowestDate(allReadings, "timeRecorded"),
               { orderId } = this.state.selectedReading,
               isSelected = (orderId ) ? true : false,
-              { comment, narative } = this.state.readings[orderId] || {
-                  comment:"",
-                  narative:""
+              { comment } = (partialData && partialData.healthmetricsComments && partialData.healthmetricsComments[orderId])? partialData.healthmetricsComments[orderId] :{
+                  comment: {
+                      impression: "",
+                      mychartNote: "",
+                      narrative: ""
+                  }
               },
-              { value, dateAndTime, unit, cx, cy, toolTip } = this.state.hoveredReading;
+              { mychartNote, narrative , impression } = comment,
+              { value, dateAndTime, unit, cx, cy, toolTip } = this.state.hoveredReading;              
 
               if(data && allReadings){
                 return(
@@ -144,15 +154,15 @@ class Graph extends Component{
                             </div>
                         </div>
                         <div className="pannel">
-                            <div className={"comments"+ (!comment ? " hide" : "")}>
+                            <div className={"comments"+ (!mychartNote ? " hide" : "")}>
                                 <div>Comments</div>
-                                <div>{comment}</div>
+                                <div>{mychartNote}</div>
                             </div>
-                            <div className={"narative" + (!narative ? " hide" : "")}>
-                                <div>Narative</div>
-                                <div>{narative}</div>
+                            <div className={"narrative" + (!narrative ? " hide" : "")}>
+                                <div>Narrative</div>
+                                <div>{narrative}</div>
                             </div>
-                            <div className={"noinfo "+ ((!comment && !narative && isSelected) ? "" : 'hide')}>There isn't any additional information for this result.</div>
+                            <div className={"noinfo "+ ((!mychartNote && !narrative && isSelected) ? "" : 'hide')}>There isn't any additional information for this result.</div>
                         </div>
                         <div className="to-mainpage">
                             <NavLink to="/healthmetrics">&#171; Back to The Results List</NavLink>
