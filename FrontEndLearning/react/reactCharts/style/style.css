@@ -1,0 +1,33 @@
+td , th {
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+.input-group{
+    margin: 20px 0;
+}
+
+td:first-of-type , td:first-of-type > div {
+    width: 250px;
+    height: 200px;
+}
+
+body {
+    margin: 0;
+  }
+  
+  #chart {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 800px;
+    height: 800px;
+    background-color: #fff;
+    margin: 0 auto;
+  }
+  .recharts-wrapper text {
+    font-family: sans-serif;
+    fill: red;
+  }
+ 
