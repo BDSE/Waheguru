@@ -1,50 +1,61 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
+import { fetchDataIfNeeded } from '../../actions';
 import Util from '../../services/Util';
 
 class List extends Component{
         constructor(props){
             super(props);
             this.handleClickOnTable = this.handleClickOnTable.bind(this);
+            this.generateTable = this.generateTable.bind(this);
         }
     
         generateTable(testResult){
             const dateMillSecs = testResult.timeRecorded,
                   result = testResult.readingValue ? testResult.readingValue : " ",
                   unit= (testResult.unit) ? testResult.unit : " ",
-                  comment = testResult.comment ? testResult.comment : " ",
-                  narative = testResult.narative ? testResult.narative : " ",
-                  orderId = testResult.orderId;
+                  orderId = testResult.orderId,
+                  { isAbnormal } = testResult,
+                  { healthmetricsComments } = this.props,
+                  { comment } = (healthmetricsComments && healthmetricsComments[orderId])? healthmetricsComments[orderId] :{
+                    comment: {
+                        impression: "",
+                        mychartNote: "",
+                        narrative: ""
+                    }
+                };
+              let commentsArr = [];
+
+              if(comment.narrative)
+              commentsArr.push({Name:"Narrative", Text:comment.narrative});
+
+              if(comment.impression)
+              commentsArr.push({Name:"Impression", Text:comment.impression});
+
+              if(comment.mychartNote)
+              commentsArr.push({Name:"Additional Notes", Text:comment.mychartNote});
+
             return (
                 <tr key={testResult.timeRecorded}>
                     <td>
                         <table>
                                 <tbody>
-                                    <tr orderid={orderId}  >
+                                    <tr >
                                         <td className="date">
                                             <span className="formattedDate">{Util.formatDate(dateMillSecs,'mm/dd/yy')}</span>
                                             <span className="time">{Util.getTimeFromDate(dateMillSecs)}</span>
                                         </td>
                                         <td className="result">
-                                            <a className="accordian">
+                                        <a className={"accordian " + (isAbnormal ? "abnormalReading" : "")} orderid={orderId}>
                                                 <span className="num">{result}</span>
                                                 <span className="units">{unit}</span>
                                                 <span className="arrow">&#8249;</span>
                                             </a>
                                         </td>
                                     </tr>
-                                    <tr className="pannel">
+                                    <tr className="comments-panel">
                                         <td>
-                                            <div className={"comments"+ (comment === " " ? " hide" : "")}>
-                                                <div>Comments</div>
-                                                <div>{comment}</div>
-                                            </div>
-                                            <div className={"narative" + (narative === " " ? " hide" : "")}>
-                                                <div>Narative</div>
-                                                <div>{narative}</div>
-                                            </div>
-                                            <div className={(comment === " " && narative === " ") ? "" : 'hide'}>There isn't any additional information for this result.</div>
+                                           {this.createCommentsPannel(commentsArr)}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -53,9 +64,26 @@ class List extends Component{
                </tr>
             );
         }
-        accordian(ele){
-            if(ele.parent().hasClass('accordian')){
-                ele.parent().toggleClass("active");
+        createCommentsPannel(arr){
+            if(arr.length === 0){
+                return (
+                    <div className="noinfo">There isn't any additional information for this result.</div>
+                );
+            }else{
+    
+               return arr.map((element) => {
+                    return (
+                        <div className="comments">
+                            <div>{element['Name']}</div>
+                            <div>{element['Text']}</div>
+                        </div>
+                    );
+                });
+            }
+        }
+        accordian(ele, parent){
+            if(parent.hasClass('accordian')){
+                parent.toggleClass("active");
             }else
                  ele.toggleClass("active");
             var panel = ele.closest('tr').next();
@@ -67,22 +95,31 @@ class List extends Component{
             }
         }
         handleClickOnTable(e){
-            const ele = $(e.target);
-            if(ele.parent().hasClass('accordian')|| ele.hasClass('accordian')){
-                this.accordian(ele);
+            const { dispatch } = this.props,
+                    ele = $(e.target),
+                    parent = ele.parent(),
+                    orderId = ele.attr('orderid') || ele.parent().attr('orderid') || '';
+
+            if(parent.hasClass('accordian')|| ele.hasClass('accordian')){
+                if(!(parent.hasClass('active') || ele.hasClass('active'))){
+                    dispatch(fetchDataIfNeeded({dataAttribute: ['healthmetricsComments']}, [{key: 'orderId', orderId: orderId}], true));
+                }
+                this.accordian(ele, parent);
             }
         }
         render(){
-            const { name, allReadings } = this.props.data;
+            const { name, allReadings, isGraphable } = this.props.data;
 
-            if(allReadings){
-                return(
-                    <div className="list">
-                        <div className="title">
-                            <h1>{name}</h1>
+            return(
+                <div>
+                    <div className="info-panel">
+                        <div>
+                            <span className="icons-sprite out-of-range-val"></span>
+                            <span className="description">Out of Range Value</span>
                         </div>
-                        <div className="info-text">Click on a result to view more information.</div>
-                        <div className="rigel-table">
+                    </div>
+                    <div className="list">
+                        <div className="rigel-table shc-scrollbar">
                             <table className="healthmetrics-table list">
                                 <thead>
                                     <tr>
@@ -95,19 +132,10 @@ class List extends Component{
                                 </tbody>
                             </table>
                         </div>
-                        <div className="to-mainpage">
-                            <NavLink to="/healthmetrics">&#171; Back to The Results List</NavLink>
-                        </div>
                     </div>
-                );
-            }else{
-                return(
-                    <div>
-                        <div className="info">No readings found.</div>
-                        <NavLink to="/healthmetrics">&#171; Back to The Results List</NavLink>
-                    </div>
-                  );
-            }
+                </div>
+            );
+
         }
 }
 

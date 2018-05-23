@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { openModal } from '../../actions_old';
+import { modifyCached, openModal } from '../../actions';
 import Moment from 'react-moment';
 import ApiCalls from "../../services/ApiCalls";
 
@@ -292,14 +292,84 @@ class Topic extends Component {
     }
 
     saveAnswer(sendDataToEpic, url){
-        const { encounterNumber } = this.props,
-            { title, point } = this.data,
+        const { encounterNumber, education } = this.props,
+            { title, topic, point } = this.data,
             { response, comment } = this.state;
 
         if(this.answerChanged()) {
-            this.data.topic.point.map(item => {
-                if(item.key === this.state.key) {
-                    item.status = response === "Acceptance" ? "3-Done" : "1-Active";
+            let dataAttribute = 'education',
+                data = false,
+                partialKey = 'response.encounter';
+
+            education.response.encounter.map((encounter, index) => {
+                if(encounter && encounter.encounterNumber === encounterNumber){
+                    partialKey += '.' + index + '.title';
+
+                    encounter.title.map((thisTitle, indexTitle) => {
+                        if(thisTitle.key === title.key){
+                            let topicsCompleted = true,
+                                partialKeyTitle = partialKey + '.' + indexTitle + '.status';
+
+                            partialKey += '.' + indexTitle + '.topic';
+
+                            thisTitle.topic.map((thisTopic, indexTopic) => {
+                                if(thisTopic.key === topic.key){
+                                    let pointsCompleted = true,
+                                        partialKeyTopic = partialKey + '.' + indexTopic + '.status';
+
+                                    partialKey += '.' + indexTopic + '.point';
+
+                                    thisTopic.point.map((thisPoint, pointIndex) => {
+                                        if(thisPoint.key === point.key){
+                                            partialKey += '.' + pointIndex;
+
+                                            thisPoint.response = response;
+                                            thisPoint.comment = response === "Acceptance" ? "" : comment;
+                                            thisPoint.status = response === "Acceptance" ? "3-Done" : "1-Active";
+
+                                            modifyCached(dataAttribute, thisPoint, partialKey);
+
+                                            if(response !== "Acceptance"){
+                                                pointsCompleted = false;
+                                            }
+                                        }else if(thisPoint.response !== "Acceptance"){
+                                            pointsCompleted = false;
+                                        }
+                                    });
+
+                                    if(pointsCompleted){
+                                        if(thisTopic.status !== "complete"){
+                                            thisTopic.status = "complete";
+                                            modifyCached(dataAttribute, "complete", partialKeyTopic);
+                                        }
+                                    }else{
+                                        if(thisTopic.status === "not-started"){
+                                            thisTopic.status = "in-progress";
+                                            modifyCached(dataAttribute, "in-progress", partialKeyTopic);
+                                        }
+                                    }
+
+                                    if(thisTopic.status !== "complete"){
+                                        topicsCompleted = false;
+                                    }
+                                }else if(thisTopic.status !== "complete"){
+                                    topicsCompleted = false;
+                                }
+                            });
+
+                            if(topicsCompleted){
+                                if(thisTitle.status !== "complete"){
+                                    thisTitle.status = "complete";
+                                    modifyCached(dataAttribute, "complete", partialKeyTitle);
+                                }
+                            }else{
+                                if(thisTitle.status === "not-started"){
+                                    thisTitle.status = "in-progress";
+                                    modifyCached(dataAttribute, "in-progress", partialKeyTitle);
+                                }
+                            }
+                        }
+                    });
                 }
             });
 
@@ -307,7 +377,7 @@ class Topic extends Component {
                 encounterNumber: encounterNumber,
                 key: point.key,
                 responseCode: (response === 'Acceptance' ? 2 : 4),
-                comment: comment,
+                comment: (response === "Acceptance" ? "" : comment),
                 sendDataToEpic: sendDataToEpic,
                 providerId: title.provider.id
             });

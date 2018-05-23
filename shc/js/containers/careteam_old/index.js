@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Providers from './Providers';
-import { openModal } from '../../actions_old';
+import { openModal } from '../../actions';
 
 class CareTeam extends Component {
     constructor(props) {

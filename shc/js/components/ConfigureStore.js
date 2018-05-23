@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 import { analyticsMiddleware } from 'react-redux-analytics';
 import { siteCatalystMiddleware } from 'react-redux-analytics-sitecatalyst';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from '../reducers_old';
+import rootReducer from '../reducers';
 //import { getPageName } from '../actions';
 
 const sConfig = {

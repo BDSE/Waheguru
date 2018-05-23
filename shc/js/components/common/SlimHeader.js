@@ -41,8 +41,8 @@ class SlimHeader extends Component {
                 </div>
                 <div className="announcement">
                     <div className="container">
-                        <button className="dismiss" onClick={ this.props.gotoOutPatient }>Switch</button>
-                        <span className="message">Welcome to Stanford Hospital, below you will find all your information related to your stay. Click View Now if you wish to use MyHealth&#8217;s Outpatient features.</span>
+                        <button className="dismiss" onClick={ this.props.gotoOutPatient }>Change View</button>
+                        <span className="message">Welcome to Stanford Hospital. Click &#8220;Change View&#8221; to switch between features for your hospital stay and for your general health.</span>
                     </div>
                 </div>
             </div>

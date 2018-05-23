@@ -6,7 +6,7 @@ import {
     INVALID_STATE,
     INVALID_USER_SESSION,
     initialState
-    } from '../actions_old';
+    } from '../actions';
 
 function forceSubmode (state, submode, params){
     state.submode = submode;

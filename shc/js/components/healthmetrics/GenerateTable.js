@@ -12,6 +12,7 @@ class GenerateTable extends Component {
         this.renderGraph = this.renderGraph.bind(this);
         this.renderResult = this.renderResult.bind(this);
         this.showColumns  = props.showColumns || ['date', 'name', 'graph', 'result'];
+        this.getWatchlistIcon = this.getWatchlistIcon.bind(this);
     }
 
     renderDate(){
@@ -32,7 +33,7 @@ class GenerateTable extends Component {
 
     renderName(){
         const { testData } = this.props,
-            view = testData.isGraphable ? 'graph': 'list',
+            view = testData.isGraphable ? 'graph': 'table',
             nameInHex = Util.hexCode(testData.name);
 
         if(this.showColumns.indexOf('name') !== -1){
@@ -80,18 +81,31 @@ class GenerateTable extends Component {
     }
 
     renderResult(){
-        const { testData } = this.props,
+        const { testData, watchlist } = this.props,
             allReadings = testData.allReadings,
             len = allReadings.length,
-            numericResult = (testData.isGraphable && allReadings) ? allReadings[len-1].numericValue : "See Comments",
+            lastestReading = allReadings[len-1],
+            numericResult = (testData.isGraphable && lastestReading) ? lastestReading.numericValue : "See Comments",
+            {isAbnormal} = (numericResult && numericResult !== "See Comments") ? lastestReading : {isAbnormal:false} ,
             units= (testData.units && numericResult !== "See Comments") ? testData.units : "";
 
         if(this.showColumns.indexOf('result') !== -1){
             return (
-                <td className="result">
+                <td className={"result "+ (isAbnormal ? "abnormalReading" : "")}>
                     <div className="num">{numericResult}</div>
                     <div className="units">{units}</div>
+                    {this.getWatchlistIcon(watchlist)}
                 </td>
+            );
+        }else{
+            return false;
+        }
+    }
+
+    getWatchlistIcon(flag){
+        if(flag){
+            return (
+                <span className="icons-sprite watchlist-icon"></span>
             );
         }else{
             return false;

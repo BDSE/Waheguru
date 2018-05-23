@@ -52,14 +52,15 @@ const Util = {
          const YEAR_ARR = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
          let processMonth = function(month){
-             let fullMonth = format.indexOf('month') > -1;
-             let abbrMonth =  format.indexOf('mmmm') > -1;
+            let fullMonth = format.indexOf('month') > -1;
+            let twoDigitMonth = format.indexOf('mmm') > -1;
+            let abbrMonth =  format.indexOf('mmmm') > -1;
             let monthStr = YEAR_ARR[month];
             if(fullMonth || abbrMonth){
                 return (fullMonth) ? monthStr : monthStr.slice(0,3);
             }
             else
-            return month+1;
+            return (twoDigitMonth) ? (month > 8 ? month+1 : '0' + (month+1)) : month+1;
          };
 
          let date = new Date(parseInt(millsecs)),
@@ -69,7 +70,7 @@ const Util = {
              dd = (day < 10)? '0'+(day) : day,
              yy = date.getFullYear();
 
-        return format.replace(/mmmm|mm|month/, mm).replace(/dd/,dd).replace(/yy/,yy);
+        return format.replace(/mmmm|mmm|mm|month/, mm).replace(/dd/,dd).replace(/yy/,yy);
 
      },
      
@@ -110,7 +111,15 @@ const Util = {
         }
     
         return str;
+    },
+
+    sortJSObject: function (obj) {
+        return Object.keys(obj).sort().reduce(function (result, key) {
+            result[key] = obj[key];
+            return result;
+        }, {});
     }
+    
 };
 
 export default Util;

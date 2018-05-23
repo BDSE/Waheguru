@@ -5,11 +5,12 @@ import {
     RECEIVE_DATA,
     RECEIVE_PARTIAL_DATA,
     RECEIVE_CACHED_DATA,
+    RECEIVE_POSTED_DATA,
     INVALID_DATA,
     REQUEST_PROCESS_DATA,
     RECEIVE_PROCESS_DATA,
     FINISH_RECEIVE_DATA
-    } from '../actions_old';
+    } from '../actions';
 
 function fetchData(
     state = {
@@ -20,7 +21,8 @@ function fetchData(
         case REQUEST_DATA:
             return $.extend({}, state, {
                 isFetching: true,
-                invalidData: false
+                invalidData: false,
+                isDataPartial: action.isDataPartial
             });
         case RECEIVE_DATA:
             return $.extend({}, state, {
@@ -34,6 +36,7 @@ function fetchData(
                 invalidData: false,
                 data: action.state.data,
                 lastUpdated: action.state.receivedAt
+
             });
         case FINISH_RECEIVE_DATA:
             return $.extend({}, state, {
@@ -50,28 +53,30 @@ function fetchData(
     }
 }
 
-function mergePartialData(state, action){
-    let partialData = {};
-    if(state.partialData){
-        if(!state.partialData[action.state.dataAttribute]){
-            partialData = $.extend({}, state.partialData, action.state.data);
-        }else{
-            partialData = {
-                [action.state.dataAttribute]: $.extend({}, state.partialData[action.state.dataAttribute], action.state.data[action.state.dataAttribute])
-            };
-        }
+// function mergePartialData(state, action){
+//     let partialData = {};
+//     if(state.partialData){
+//         if(!state.partialData[action.state.dataAttribute]){
+//             partialData = $.extend({}, state.partialData, action.state.data);
+//         }else{
+//             partialData = {
+//                 [action.state.dataAttribute]: $.extend({}, state.partialData[action.state.dataAttribute], action.state.data[action.state.dataAttribute])
+//             };
+//         }
 
-    }else{
-        partialData = action.state.data;
-    }
+//     }else{
+//         partialData = action.state.data;
+//     }
 
-    return partialData;
-}
+//     return partialData;
+// }
 
 function getData(state = {}, action = {}) {
     switch (action.type) {
         case REQUEST_DATA:
         case RECEIVE_DATA:
+        case RECEIVE_CACHED_DATA:
+        case FINISH_RECEIVE_DATA:
         case INVALID_DATA:
             return $.extend({}, state,fetchData(state, action)
         );
@@ -90,10 +95,14 @@ function getData(state = {}, action = {}) {
         case RECEIVE_PARTIAL_DATA:
 
             return $.extend({}, state, {
-                isFetching: false,
+                isDataPartial: false
+            });
+        case RECEIVE_POSTED_DATA:
+            return $.extend({}, state, {
                 invalidData: false,
-                partialData: mergePartialData(state, action),
-                lastUpdated: action.state.receivedAt
+                data: action.state.data,
+                lastUpdated: action.state.receivedAt,
+                isFetching: false
             });
 
         default:

@@ -18,15 +18,12 @@ class Chart extends Component{
         super(props);
     }
 
-    renderGradient(referenceAreaMax, referenceAreaMin, normalStrokeCol, abnormalStrokeCol, maxMinArr){
+    renderGradient(colorBreakPointMax, colorBreakPointMin, normalStrokeCol, abnormalStrokeCol, maxMinArr){
 
-        const colorBreakPoint1 = referenceAreaMin,
-              colorBreakPoint2 = referenceAreaMax;
-
-        if(referenceAreaMin && referenceAreaMax){
+        if(colorBreakPointMax && colorBreakPointMin){
             /* Calculate the breakpoints for both the upper and lower range values, so that we can change color at these thresholds in graph line*/
-            const colorBreakPointPercentage1 = `${(1 - ((colorBreakPoint1 - maxMinArr[0]) / (maxMinArr[1] - maxMinArr[0]))) * 100}%`;
-            const colorBreakPointPercentage2 = `${((maxMinArr[1] - colorBreakPoint2) / (maxMinArr[1] - maxMinArr[0])) * 100}%`;
+            const colorBreakPointPercentage1 = `${(1 - ((colorBreakPointMin - maxMinArr[0]) / (maxMinArr[1] - maxMinArr[0]))) * 100}%`;
+            const colorBreakPointPercentage2 = `${((maxMinArr[1] - colorBreakPointMax) / (maxMinArr[1] - maxMinArr[0])) * 100}%`;
             return (
                 <defs>
                     <linearGradient id="lineColor" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -45,30 +42,32 @@ class Chart extends Component{
     }
 
     render () { 
+        //console.log("charts: render: props: ", this.props);
         const { 
-                axisColor, 
+                data,
                 yAxisDataKey, 
                 xAxisDataKey, 
                 referenceAreaMax, 
-                referenceAreaMin, 
-                normalStrokeCol, 
-                abnormalStrokeCol, 
-                data, 
+                referenceAreaMin,  
                 xAxisLabelArr, 
                 showReadingToolTIp, 
                 clearToolTip, 
                 selectedData, 
-                isDot
+                isDot,
+                strokeWidth,
+                isRectangleArea
             } = this.props,
                 maxMinArr = Util.getDataMaxMinVal(data, yAxisDataKey),
-                isRefArea = (referenceAreaMax && referenceAreaMin);
-
-            let axisPadding = this.props.axisPadiing || 30;
+                isRefArea = (referenceAreaMax && referenceAreaMin),
+                normalStrokeCol = this.props.normalStrokeCol || 'black',
+                abnormalStrokeCol = this.props.abnormalStrokeCol || normalStrokeCol,
+                axisColor = this.props.axisColor || 'black',
+                axisPadding = this.props.axisPadiing || 30;
 
       return (
           <ResponsiveContainer width="100%" height={500}>
             <LineChart data={data}>
-                <XAxis dataKey={xAxisDataKey}  tick={false} padding={{left:axisPadding,right:axisPadding}} stroke={axisColor? axisColor : "black"} >
+                <XAxis dataKey={xAxisDataKey}  tick={false} padding={{left:axisPadding,right:axisPadding}} stroke={axisColor} >
                     <Label value={(xAxisLabelArr && xAxisLabelArr.length != 0) ? xAxisLabelArr[0] : " "} offset={0} position="insideBottomLeft" />
                     <Label value={(xAxisLabelArr && xAxisLabelArr.length != 0) ? xAxisLabelArr[1] : " "} offset={0} position="insideBottomRight" />
                 </XAxis>
@@ -79,13 +78,13 @@ class Chart extends Component{
                     ticks={isRefArea ? [referenceAreaMax, referenceAreaMin] : [0, maxMinArr[1]] }
                     tickSize={0}
                     padding={{ bottom: axisPadding, top:axisPadding}}
-                    stroke={axisColor? axisColor : "black"}
-                    tick={isRefArea ? <RectangleArea referenceAreaMax={referenceAreaMax} referenceAreaMin={referenceAreaMin} dataMinVal={maxMinArr[0]} dataMaxVal={maxMinArr[1]} padding={axisPadding} fillColor={normalStrokeCol} /> : true}
+                    stroke={axisColor}
+                    tick={isRectangleArea ? <RectangleArea referenceAreaMax={referenceAreaMax} referenceAreaMin={referenceAreaMin} dataMinVal={maxMinArr[0]} dataMaxVal={maxMinArr[1]} padding={axisPadding} /> : true}
                 />
                     
                 {this.renderGradient(referenceAreaMax, referenceAreaMin, normalStrokeCol, abnormalStrokeCol, maxMinArr)}
 
-                <Line type="monotone" dataKey="numericValue" stroke={isRefArea ? 'url(#lineColor)' : normalStrokeCol} strokeWidth="5" 
+                <Line dataKey="numericValue" stroke={isRefArea ? 'url(#lineColor)' : normalStrokeCol} strokeWidth={strokeWidth ? strokeWidth : 5}
                 dot={
                     isDot ? 
                     <Dot 
@@ -96,7 +95,7 @@ class Chart extends Component{
                         normalStrokeCol={normalStrokeCol} 
                         abnormalStrokeCol={abnormalStrokeCol} 
                         selectedData={selectedData}
-                        radius="12"
+                        radius="10"
                     /> : false
                 }
                 />

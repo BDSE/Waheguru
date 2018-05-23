@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
-import profile from './initialData-reducer';
-import careteam from './careTeam_reducer';
+import analytics from './analytics';
+import getData from './getData';
+import getState from './getState';
+import modal from './modal';
+import spinner from './spinner';
 
 const rootReducer = combineReducers({
-    profile: profile,
-    careteam: careteam
+    analytics,
+    getData,
+    getState,
+    modal,
+    spinner
 });
 
 export default rootReducer;

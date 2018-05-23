@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { openModal } from '../../actions_old';
+import { openModal } from '../../actions';
 import Summary from './Summary';
 import Topic from './Topic';
 import Point from './Point';

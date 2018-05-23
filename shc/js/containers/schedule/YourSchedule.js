@@ -18,7 +18,7 @@ class YourSchedule extends Component {
 
     componentDidUpdate(){
         let today = new Date(this.state.date),
-            todayString = Util.formatDate(today.getTime(), 'yy-mm-dd');
+            todayString = Util.formatDate(today.getTime(), 'yy-mmm-dd');
 
         if(this.props.date && this.props.date !== todayString){
             let thisDay = this.getValidDate(this.props.date);
@@ -35,7 +35,7 @@ class YourSchedule extends Component {
         let thisDay = /\d{4}-\d{2}-\d{2}/.test(date) ? new Date(date + ' 00:00:00') : 'Invalid Date';
 
         if(thisDay.toString() !== 'Invalid Date'){
-            let thisDateString = Util.formatDate(thisDay.getTime(), 'yy-mm-dd');
+            let thisDateString = Util.formatDate(thisDay.getTime(), 'yy-mmm-dd');
 
             if(thisDateString !== date) {
                 thisDay = 'Invalid Date';
@@ -47,7 +47,7 @@ class YourSchedule extends Component {
 
     onChangeDate(date){
         let toDay = new Date(date),
-            toDateString = Util.formatDate(toDay.getTime(), 'yy-mm-dd');
+            toDateString = Util.formatDate(toDay.getTime(), 'yy-mmm-dd');
 
         this.props.history.push('/schedule/view/' + toDateString);
     }
@@ -55,7 +55,7 @@ class YourSchedule extends Component {
     render() {
         let days = [0, 1, 2, 3, 4, 5, 6],
             today = new Date(this.state.date),
-            todayString = Util.formatDate(today.getTime(), 'yy-mm-dd'),
+            todayString = Util.formatDate(today.getTime(), 'yy-mmm-dd'),
             todate = this.state.date.getDay();
 
         const { schedule } = this.props,

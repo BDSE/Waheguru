@@ -4,7 +4,7 @@ import {
     MODAL_OPENED,
     MODAL_CONTENT,
     MODAL_CLOSED
-    } from '../actions_old';
+    } from '../actions';
 
 function modal(
     state = {}, action = {}

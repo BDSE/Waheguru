@@ -1,9 +1,8 @@
 import React,{ Component } from 'react';
-import { openModal } from '../../actions_old';
-import { healthmetricsReverseData, healthmetricsSearch } from '../../actions_old/processData';
+import { openModal } from '../../actions';
+import { healthmetricsReverseData, healthmetricsSearch } from '../../actions/processData';
 import Main from './main';
-import Graph from './graph';
-import List from './list';
+import Readings from './Readings';
 import Util from '../../services/Util';
 
 class VitalsAndResults extends Component{
@@ -69,7 +68,7 @@ class VitalsAndResults extends Component{
     }
 
     renderView(){
-        const { healthmetrics, dispatch, partialData } = this.props;
+        const { healthmetrics, dispatch, healthmetricsComments, healthmetricsWatchList } = this.props;
         const paramsObj = (this.props.match.params) ? this.props.match.params : {
             mode: "healthmetrics",
             submode: undefined,
@@ -81,18 +80,20 @@ class VitalsAndResults extends Component{
             params = Util.hexDecode(params);
             data = Util.selectObjectFromArray('name', params, healthmetrics.healthmetrics);
         }
-        switch(submode) {
-            case 'graph':
-            return (<Graph data={data} dispatch={dispatch} partialData={partialData}/>);
-            case 'list':
-            return (<List data={data} dispatch={dispatch} partialData={partialData}/>);
-            default:
-            return (<Main data= {healthmetrics} changeOrder={this.changeOrder} searchTestResults={this.searchTestResults} />);
+
+        if(submode === 'graph' || submode === 'table'){
+            return (
+                <Readings data={data} dispatch={dispatch} healthmetricsComments={healthmetricsComments} paramsObj={paramsObj} history={this.props.history}/>
+            );
+        }else{
+            return (
+                <Main data= {healthmetrics} changeOrder={this.changeOrder} searchTestResults={this.searchTestResults} dispatch={dispatch} watchlist={healthmetricsWatchList}/>
+            );
         }
     }
 
     render(){
-        console.log("index: healthmetrics: props", this.props);
+        
         return(
             <div className="healthmetrics test-results">
                 <div className="info-icon" onClick={ this.infoDot }>

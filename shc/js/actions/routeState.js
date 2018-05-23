@@ -12,7 +12,7 @@ export const initialState = {
     dataAttribute: ['getUserData']
 };
 
-const todate = Util.formatDate(new Date().getTime(), 'yy-mm-dd');
+const todate = Util.formatDate(new Date().getTime(), 'yy-mmm-dd');
 
 export const ALL_STATES = {
     'home': {
@@ -34,7 +34,7 @@ export const ALL_STATES = {
     'healthmetrics': {
         name: 'Test Results',
         tab: true,
-        dataAttribute: ['healthmetrics']
+        dataAttribute: ['healthmetrics','healthmetricsWatchList']
     },
     'education': {
         name: 'Education',

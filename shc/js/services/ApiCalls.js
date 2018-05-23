@@ -92,11 +92,8 @@ const ApiCalls = {
         let url = OrionBedsideURL + "/schedule",
             dateObj = new Date(params.date + ' 00:00:00'),
             today = dateObj.toString() !== 'Invalid Date' ? dateObj : new Date(),
-            year = today.getFullYear(),
-            month = parseInt(today.getMonth() + 1, 10),
-            day = today.getDate(),
             data = {
-                payload: year + '-' + (month > 9 ? month : '0' + month) + '-' + (day > 9 ? day : '0' + day)
+                payload: Util.formatDate(today.getTime(), 'yy-mmm-dd')
             };
 
         return this.makeCall(url, 'POST', data);
@@ -161,7 +158,7 @@ const ApiCalls = {
         let url = OrionBedsideURL + "/healthmetrics";
         return this.makeCall(url).then(response => {
             if (response && response.healthmetrics) {
-                Util.sortArrayOfObjects(response.healthmetrics, 'lastRecorded');
+                Util.sortArrayOfObjects(response.healthmetrics, 'lastRecorded', -1);
             }
             return response;
         });
@@ -178,7 +175,54 @@ const ApiCalls = {
                 [key]: payload
             };
         return this.makeCall(url, 'POST', data);
+    },
+
+    healthmetricsSetWatchList: function(params){
+        //storing in local storage untill backend support is ready
+        return this.readWriteToLocaStorage(params, "healthmetricsWatchList", true, "watchlist");
+
+    },
+
+    healthmetricsWatchList: function(){
+        return this.readWriteToLocaStorage(null, "healthmetricsWatchList", false, "watchlist");
+    },
+
+    //this method is to mimic data base if the backend API is not ready yet. retrieve and store data to local storge
+    readWriteToLocaStorage: function(params, key, writeFlag, dataWrapper, shouldFailCall){
+
+        if(params && typeof params === 'object'){
+            params = JSON.stringify(params);
+        }
+        let promise = new Promise(function(resolve, reject){
+            setTimeout(function(){
+                if(writeFlag)
+                    localStorage.setItem(key, params);
+                let retrievedData = localStorage.getItem(key);
+                let responseObj = {
+                    meta:{}
+                };
+                if(retrievedData){
+                    retrievedData = JSON.parse(retrievedData);
+                    responseObj[dataWrapper ? dataWrapper : 'data'] = retrievedData;
+                    responseObj.meta.code = 200;
+                    resolve(responseObj);
+                }else{
+                    if(shouldFailCall){
+                        responseObj.error = true;
+                        responseObj.meta.code = 400;
+                        resolve(responseObj);
+                    }else{
+                        responseObj[dataWrapper ? dataWrapper : 'data'] = [];
+                        responseObj.meta.code = 200;
+                        resolve(responseObj);
+                    }
+                }
+            },0);
+        });
+
+        return promise;
     }
+
 };
 
 export default ApiCalls;
