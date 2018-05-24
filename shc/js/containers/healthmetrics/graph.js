@@ -27,10 +27,20 @@ class Graph extends Component{
             }
         };
 
+        this.orderId = "";
         this.handleClick = this.handleClick.bind(this);
         this.showReadingToolTIp = this.showReadingToolTIp.bind(this);
         this.clear = this.clear.bind(this);
 
+    }
+
+    componentDidUpdate(){
+        const { orderId } = this.state.selectedReading;
+        const { dispatch } = this.props;
+        if( orderId !== this.orderId ){
+            dispatch(fetchDataIfNeeded({dataAttribute: ['healthmetricsComments']}, [{key: 'orderId', orderId: orderId}]));
+            this.orderId = orderId;
+        }
     }
 
     getHighestLowestDate(data=[], key){
@@ -77,7 +87,6 @@ class Graph extends Component{
     }
 
     handleClickOnReading(target){
-        const { dispatch } = this.props;
         const orderId = target.attr('orderid') || '';
         if(orderId !== this.state.selectedReading.orderId){
             this.setState({
@@ -85,7 +94,6 @@ class Graph extends Component{
                     orderId:orderId
                 }
             });
-            dispatch(fetchDataIfNeeded({dataAttribute: ['healthmetricsComments']}, [{key: 'orderId', orderId: orderId}], true));
         }
     }
 
@@ -109,7 +117,8 @@ class Graph extends Component{
     }
 
     createCommentsPannel(arr){
-        if(arr.length === 0 && this.state.selectedReading.orderId){
+        const {orderId} = this.state.selectedReading;
+        if(arr.length === 0 && orderId){
             return (
                 <div className="noinfo">There isn't any additional information for this result.</div>
             );
@@ -117,7 +126,7 @@ class Graph extends Component{
 
            return arr.map((element) => {
                 return (
-                    <div className="comments">
+                    <div key={element['Name']} className="comments">
                         <div>{element['Name']}</div>
                         <div>{element['Text']}</div>
                     </div>
@@ -142,9 +151,8 @@ class Graph extends Component{
                 }
             },
             { value, dateAndTime, unit, cx, cy, toolTip, isAbnormal } = this.state.hoveredReading; 
-            
             let commentsArr = [];
-
+            console.log(comment);
             if(comment.narrative)
             commentsArr.push({Name:"Narrative", Text:comment.narrative});
 

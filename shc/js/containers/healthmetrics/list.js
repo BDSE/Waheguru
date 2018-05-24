@@ -8,16 +8,35 @@ class List extends Component{
             super(props);
             this.handleClickOnTable = this.handleClickOnTable.bind(this);
             this.generateTable = this.generateTable.bind(this);
+            this.state = {
+                healthmetricsComments:{}
+            };
         }
     
+        componentDidUpdate(){
+            const { healthmetricsComments } = this.props;
+            if(healthmetricsComments){
+                const orderId = Object.keys(healthmetricsComments)[0];
+
+                if(!this.state.healthmetricsComments[orderId]){
+                    let obj = $.extend({}, this.state.healthmetricsComments, healthmetricsComments);
+                    this.setState({
+                        healthmetricsComments: obj
+                    });
+
+                }
+
+            }
+        }
+
         generateTable(testResult){
             const dateMillSecs = testResult.timeRecorded,
                   result = testResult.readingValue ? testResult.readingValue : " ",
                   unit= (testResult.unit) ? testResult.unit : " ",
                   orderId = testResult.orderId,
                   { isAbnormal } = testResult,
-                  { healthmetricsComments } = this.props,
-                  { comment } = (healthmetricsComments && healthmetricsComments[orderId])? healthmetricsComments[orderId] :{
+                  { healthmetricsComments } = this.state,
+                  { comment } = (healthmetricsComments[orderId])? healthmetricsComments[orderId] :{
                     comment: {
                         impression: "",
                         mychartNote: "",
@@ -73,7 +92,7 @@ class List extends Component{
     
                return arr.map((element) => {
                     return (
-                        <div className="comments">
+                        <div key={element['Name']} className="comments">
                             <div>{element['Name']}</div>
                             <div>{element['Text']}</div>
                         </div>
@@ -100,12 +119,10 @@ class List extends Component{
                     parent = ele.parent(),
                     orderId = ele.attr('orderid') || ele.parent().attr('orderid') || '';
 
-            if(parent.hasClass('accordian')|| ele.hasClass('accordian')){
-                if(!(parent.hasClass('active') || ele.hasClass('active'))){
-                    dispatch(fetchDataIfNeeded({dataAttribute: ['healthmetricsComments']}, [{key: 'orderId', orderId: orderId}], true));
-                }
-                this.accordian(ele, parent);
+            if(!this.state.healthmetricsComments[orderId]){
+                dispatch(fetchDataIfNeeded({dataAttribute: ['healthmetricsComments']}, [{key: 'orderId', orderId: orderId}]));
             }
+            this.accordian(ele, parent);
         }
         render(){
             const { name, allReadings, isGraphable } = this.props.data;

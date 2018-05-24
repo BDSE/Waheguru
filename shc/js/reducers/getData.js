@@ -3,7 +3,6 @@ import $ from 'jquery';
 import {
     REQUEST_DATA,
     RECEIVE_DATA,
-    RECEIVE_PARTIAL_DATA,
     RECEIVE_CACHED_DATA,
     RECEIVE_POSTED_DATA,
     INVALID_DATA,
@@ -21,8 +20,7 @@ function fetchData(
         case REQUEST_DATA:
             return $.extend({}, state, {
                 isFetching: true,
-                invalidData: false,
-                isDataPartial: action.isDataPartial
+                invalidData: false
             });
         case RECEIVE_DATA:
             return $.extend({}, state, {
@@ -53,24 +51,6 @@ function fetchData(
     }
 }
 
-// function mergePartialData(state, action){
-//     let partialData = {};
-//     if(state.partialData){
-//         if(!state.partialData[action.state.dataAttribute]){
-//             partialData = $.extend({}, state.partialData, action.state.data);
-//         }else{
-//             partialData = {
-//                 [action.state.dataAttribute]: $.extend({}, state.partialData[action.state.dataAttribute], action.state.data[action.state.dataAttribute])
-//             };
-//         }
-
-//     }else{
-//         partialData = action.state.data;
-//     }
-
-//     return partialData;
-// }
-
 function getData(state = {}, action = {}) {
     switch (action.type) {
         case REQUEST_DATA:
@@ -91,11 +71,6 @@ function getData(state = {}, action = {}) {
             return $.extend({}, state, {
                 isFetching: true,
                 invalidData: false
-            });
-        case RECEIVE_PARTIAL_DATA:
-
-            return $.extend({}, state, {
-                isDataPartial: false
             });
         case RECEIVE_POSTED_DATA:
             return $.extend({}, state, {

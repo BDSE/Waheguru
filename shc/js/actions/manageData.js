@@ -6,15 +6,13 @@ import { requestProcessData, recieveProcessedData} from './index';
 export const REQUEST_DATA = 'REQUEST_DATA';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 export const RECEIVE_CACHED_DATA = 'RECEIVE_CACHED_DATA';
-export const RECEIVE_PARTIAL_DATA = 'RECEIVE_PARTIAL_DATA';
 export const FINISH_RECEIVE_DATA = 'FINISH_RECEIVE_DATA';
 export const INVALID_DATA = 'INVALID_DATA';
 export const RECEIVE_POSTED_DATA = 'RECEIVE_POSTED_DATA';
 
-function requestData (state, isDataPartial=false){
+function requestData (state){
     return {
         type: REQUEST_DATA,
-        isDataPartial: isDataPartial,
         state
     };
 }
@@ -64,11 +62,11 @@ function receiveData(state, response){
     };
 }
 
-export function recievePartialData(state){
-    Promise.resolve({
-        type: RECEIVE_PARTIAL_DATA
-    });
-}
+// export function recievePartialData(state){
+//    return {
+//         type: RECEIVE_PARTIAL_DATA
+//     };
+// }
 
 function receiveCachedData (state, response){
     state.data = response;
@@ -155,10 +153,10 @@ export function postData(dataAttribute, params, key, altDataAttr){
         }
     };
 }
-function getData (state, params, isDataPartial){
+function getData (state, params){
     return dispatch => {
         if(state && state.dataAttribute && state.dataAttribute.length) {
-            dispatch(requestData(state, isDataPartial));
+            dispatch(requestData(state));
 
             let promises = [],
                 responses = {},
@@ -171,6 +169,12 @@ function getData (state, params, isDataPartial){
                         key = param && param.key ? param[param.key] : false;
                     promises.push(ApiCalls[dataAttribute](param).then(response => {
                         if (response && !response.error) {
+                            response.comment = {
+                                impression:"impression",
+                                mychartNote:"mychartnote",
+                                narrative:key,
+                                orderId:"300044662"
+                            };
                             if(key){
                                 responses[dataAttribute] = {
                                     [key]: response
@@ -215,9 +219,9 @@ function getData (state, params, isDataPartial){
 
 // }
 
-function shouldFetchData (state, params) {
+function shouldFetchData (state, params, dispatch) {
     let dataAttributes = [];
-
+    let cachedResponses = {};
     if(state.dataAttribute && state.dataAttribute.length){
         state.dataAttribute.map((dataAttribute, index) => {
             let param = params && params.length > index ? params[index] : false,
@@ -228,12 +232,22 @@ function shouldFetchData (state, params) {
             if(cachedData === false){
                 dataAttributes.push(dataAttribute);
             }else{
-                receiveCachedData(state, cachedData);
+                if(key){
+                    cachedResponses[dataAttribute] = {
+                        [key]: cachedData
+                    };
+                    cachedResponses.dataParams = param;
+                }else {
+                    cachedResponses[dataAttribute] = cachedData;
+                }
             }
         });
     }
 
-    if(dataAttributes.length){
+    if(Object.keys(cachedResponses).length){
+        dispatch(receiveCachedData(state, cachedResponses));
+    }
+    else if(dataAttributes.length){
         return dataAttributes;
     } else {
         return false;
@@ -256,13 +270,13 @@ function shouldFetchData (state, params) {
 //     };
 // }
 
-export function fetchDataIfNeeded (state, params, isDataPartial= false){
+export function fetchDataIfNeeded (state, params){
     return (dispatch) => {
-        let dataAttributes = shouldFetchData(state, params);
+        let dataAttributes = shouldFetchData(state, params, dispatch);
         if(dataAttributes && dataAttributes.length){
             return dispatch(getData({
                 dataAttribute: dataAttributes
-            }, params, isDataPartial));
+            }, params));
         }else{
             dispatch(finishReceiveData(state));
         }

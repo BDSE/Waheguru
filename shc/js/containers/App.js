@@ -7,8 +7,7 @@ import {
     getStateParams,
     ALL_STATES,
     changeState,
-    closeModal,
-    recievePartialData
+    closeModal
     } from '../actions';
 import { compose } from 'recompose';
 import { sendAnalytics } from 'react-redux-analytics';
@@ -52,24 +51,11 @@ class App extends Component {
     }
 
     componentDidUpdate (){
-        const { isChanging, isFetching, invalidState, invalidUserSession, mode, submode, params, invalidData, dataAttribute, data, modalIsOpen, match, dispatch, isDataPartial } = this.props;
+        const { isChanging, isFetching, invalidState, invalidUserSession, mode, submode, params, invalidData, dataAttribute, data, modalIsOpen, match, dispatch } = this.props;
         if(!isChanging && !isFetching) {
             if(invalidUserSession) {
                 this.invalidSession();
-            }else if(isDataPartial){
-                let obj;
-                for(let key in data){
-                    if(!this.state[key]) obj = $.extend({}, obj, data);
-                    else{
-                        obj = $.extend({}, this.state[key], data[key]);
-                    }
-                }
-                dispatch(recievePartialData()).then(function(){
-                    this.setState({
-                        [key] : obj
-                    });
-                });
-            } 
+            }
             else if(this.state.mode !== mode || this.state.submode !== submode || this.state.params !== params || modalIsOpen !== this.state.modalIsOpen ) {
                 let thisData = this.state[dataAttribute] ? {
                     [dataAttribute]: this.state[dataAttribute]
@@ -180,7 +166,7 @@ class App extends Component {
             case 'careteam':
                 return <CareTeam { ...this.state } />;
             case 'healthmetrics':
-                return <HealthMetrics { ...this.state } />;
+                return <HealthMetrics { ...this.state } healthmetricsComments={this.props.data.healthmetricsComments || ""}/>;
             case 'medications':
                 return <Medications { ...this.state } />;
             case 'education':
@@ -258,11 +244,9 @@ const mapStateToProps = (state) => {
     const {
         isFetching,
         invalidData,
-        data,
-        isDataPartial
+        data
     } = getData || {
-        isFetching: true,
-        isDataPartial: false
+        isFetching: true
     };
     const {
         modalParams,
@@ -290,8 +274,7 @@ const mapStateToProps = (state) => {
         invalidUserSession,
         modalParams,
         modalIsOpen,
-        showSpinner,
-        isDataPartial
+        showSpinner
     };
 };
 
