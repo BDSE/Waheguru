@@ -1,0 +1,316 @@
+{
+  "id": "TVZ8FF3ZAYK1W",
+  "name": "Book Store Essentials",
+  "displayName": "Book Store Essentials",
+  "countryCode": "US",
+  "maxSize": 25,
+  "autoInstall": false,
+  "carouselApps": [
+    {
+      "id": "YG7RSD8NBKY9E",
+      "name": "order paper staging",
+      "developer": {
+        "id": "7D0XNTJCAMH9W",
+        "name": "John Tapley"
+      },
+      "description": "blah",
+      "tagline": "blah",
+      "filenameIcon": "https://dev1.dev.clover.com/v2/image/paperroll_icon.png_en_US_1717151087997035658.png",
+      "filenameIconSmall": "https://dev1.dev.clover.com/v2/image/paperroll_icon.png_en_US_1717151087997035658_80x80.png",
+      "filenameIconLarge": "https://dev1.dev.clover.com/v2/image/paperroll_icon.png_en_US_1717151087997035658_200x200.png",
+      "filenameBanner": "order_paper_hero_en_US_5051068704394089044.png",
+      "availableSubscriptions": {
+        "elements": [
+          {
+            "id": "BM1MC6667RCPC",
+            "plan": false,
+            "subscriptionCountries": {
+              "elements": [
+                {
+                  "id": "GEJ2YPB602Z2R",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "US",
+                  "description": "",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BM1MC6667RCPC"
+                  }
+                },
+                {
+                  "id": "6QAJS90Z62Z76",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "IE",
+                  "description": "",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BM1MC6667RCPC"
+                  }
+                },
+                {
+                  "id": "8XSHKFD8JW7TG",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "GB",
+                  "description": "",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BM1MC6667RCPC"
+                  }
+                }
+              ]
+            },
+            "app": {
+              "id": "YG7RSD8NBKY9E"
+            },
+            "label": "FREE"
+          },
+          {
+            "id": "R4N1SED3NQG5A",
+            "plan": false,
+            "subscriptionCountries": {
+              "elements": [
+                {
+                  "id": "VRH43PR9Q07F0",
+                  "name": "paid",
+                  "amount": 1000,
+                  "country": "US",
+                  "description": "",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "R4N1SED3NQG5A"
+                  }
+                },
+                {
+                  "id": "4KM7MG25Z45T2",
+                  "name": "paiod",
+                  "amount": 1000,
+                  "country": "CA",
+                  "description": "",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "R4N1SED3NQG5A"
+                  }
+                }
+              ]
+            },
+            "app": {
+              "id": "YG7RSD8NBKY9E"
+            },
+            "label": "paid"
+          }
+        ]
+      },
+      "paidAppHasTrial": true,
+      "firstPublishedTime": 2017,
+      "popularity": 44,
+      "locales": {
+        "elements": [
+          {
+            "id": "TGH08ZWCTE5DG",
+            "app": {
+              "id": "YG7RSD8NBKY9E"
+            },
+            "locale": "en_US",
+            "name": "order paper staging",
+            "description": "blah",
+            "tagline": "blah",
+            "filenameIcon": "paperroll_icon.png_en_US_1717151087997035658.png",
+            "filenameIconSmall": "https://dev1.dev.clover.com/v2/image/paperroll_icon.png_en_US_1717151087997035658_80x80.png",
+            "filenameIconLarge": "https://dev1.dev.clover.com/v2/image/paperroll_icon.png_en_US_1717151087997035658_200x200.png",
+            "filenameCover": "https://dev1.dev.clover.com/v2/image/order_paper_cover_en_US_7333470893870353200.png",
+            "filenameBanner": "https://dev1.dev.clover.com/v2/image/order_paper_hero_en_US_5051068704394089044.png",
+            "privacyPolicy": "https://www.clover.com",
+            "eula": "https://www.clover.com",
+            "supportPhone": "1-408-123-4567",
+            "supportPhoneHours": "M-F 8:00 - 5:00",
+            "supportEmail": "clover@clover.com",
+            "supportUrl": "https://www.clover.com"
+          }
+        ]
+      },
+      "aggregateRating": {
+        "reviewCount": 1,
+        "totalStars": 5
+      },
+      "trialDays": 30
+    },
+    {
+      "id": "CRHBTRJTJDD9R",
+      "name": "Daphne Dev1 App",
+      "developer": {
+        "id": "G5RNHARNYT826",
+        "name": "Daphne Dev1 Dev"
+      },
+      "description": "\"When your head hits the pillow tonight, remind yourself that you have done a good job. You are headed down your path at your own pace, and with every obstacle you are trying your utmost best. Be patient with yourself, and remember that big things are achieved not all at once, but one day at a time.\"",
+      "tagline": "test tagline",
+      "filenameIcon": "https://dev1.dev.clover.com/v2/image/blislogo_200.jpg_en_US_3857348230552883540.jpg",
+      "filenameIconSmall": "https://dev1.dev.clover.com/v2/image/blislogo_200.jpg_en_US_3857348230552883540_80x80.jpg",
+      "filenameIconLarge": "https://dev1.dev.clover.com/v2/image/blislogo_200.jpg_en_US_3857348230552883540_200x200.jpg",
+      "availableSubscriptions": {
+        "elements": [
+          {
+            "id": "BF1NSCGSB4F3C",
+            "plan": false,
+            "subscriptionCountries": {
+              "elements": [
+                {
+                  "id": "D9KDFFQZX1GWC",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "IE",
+                  "description": "FREE",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BF1NSCGSB4F3C"
+                  }
+                },
+                {
+                  "id": "ER3CQE7NP49VA",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "US",
+                  "description": "FREE",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BF1NSCGSB4F3C"
+                  }
+                },
+                {
+                  "id": "MBQW6MECF0B2P",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "GB",
+                  "description": "FREE",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BF1NSCGSB4F3C"
+                  }
+                },
+                {
+                  "id": "N785P6143B6YJ",
+                  "name": "FREE",
+                  "amount": 0,
+                  "country": "DE",
+                  "description": "FREE",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "BF1NSCGSB4F3C"
+                  }
+                }
+              ]
+            },
+            "app": {
+              "id": "CRHBTRJTJDD9R"
+            },
+            "label": "FREE"
+          },
+          {
+            "id": "5AV22HR5MCXKP",
+            "plan": false,
+            "subscriptionCountries": {
+              "elements": [
+                {
+                  "id": "PFN5FW7TAFKKP",
+                  "name": "New Subscription",
+                  "amount": 500,
+                  "country": "US",
+                  "description": "",
+                  "active": true,
+                  "appSubscription": {
+                    "id": "5AV22HR5MCXKP"
+                  }
+                }
+              ]
+            },
+            "app": {
+              "id": "CRHBTRJTJDD9R"
+            },
+            "label": "New Subscription"
+          }
+        ]
+      },
+      "paidAppHasTrial": true,
+      "firstPublishedTime": 2018,
+      "popularity": 4,
+      "locales": {
+        "elements": [
+          {
+            "id": "PCFX6KN1J8W18",
+            "app": {
+              "id": "CRHBTRJTJDD9R"
+            },
+            "locale": "de_DE",
+            "name": "DE - Daphne Dev1 App",
+            "description": "Alles an einem Ort. Einfach zu verwenden. Schneller zu implementieren",
+            "tagline": "Einfach. Schneller. Glatter",
+            "smartReceiptText": "",
+            "smartReceiptUrl": ""
+          },
+          {
+            "id": "ZVT51JDXCEEVA",
+            "app": {
+              "id": "CRHBTRJTJDD9R"
+            },
+            "locale": "fr_CA",
+            "name": "FR-Daphne Dev1 App",
+            "smartReceiptText": "",
+            "smartReceiptUrl": ""
+          },
+          {
+            "id": "HVBRQEFW8F9HY",
+            "app": {
+              "id": "CRHBTRJTJDD9R"
+            },
+            "locale": "en_CA",
+            "name": "Daphne Dev1 App",
+            "description": "\nTester les textes de description",
+            "tagline": "\nTester les textes de description",
+            "videoUrl": "//player.vimeo.com/video/66766526",
+            "privacyPolicy": "https://dev1.dev.clover.com",
+            "eula": "https://dev1.dev.clover.com",
+            "supportPhone": "6509441234",
+            "supportPhoneHours": "6509441234",
+            "supportEmail": "daphne.wang+support@clover.com",
+            "supportUrl": "https://dev1.dev.clover.com",
+            "smartReceiptText": "",
+            "smartReceiptUrl": ""
+          },
+          {
+            "id": "K6XFD1DW2M6AT",
+            "app": {
+              "id": "CRHBTRJTJDD9R"
+            },
+            "locale": "en_US",
+            "name": "Daphne Dev1 App",
+            "description": "\"When your head hits the pillow tonight, remind yourself that you have done a good job. You are headed down your path at your own pace, and with every obstacle you are trying your utmost best. Be patient with yourself, and remember that big things are achieved not all at once, but one day at a time.\"",
+            "tagline": "test tagline",
+            "videoUrl": "//player.vimeo.com/video/95410326",
+            "filenameIcon": "blislogo_200.jpg_en_US_3857348230552883540.jpg",
+            "filenameIconSmall": "https://dev1.dev.clover.com/v2/image/blislogo_200.jpg_en_US_3857348230552883540_80x80.jpg",
+            "filenameIconLarge": "https://dev1.dev.clover.com/v2/image/blislogo_200.jpg_en_US_3857348230552883540_200x200.jpg",
+            "privacyPolicy": "https://dev1.dev.clover.com/developers",
+            "eula": "https://dev1.dev.clover.com/developers",
+            "supportPhone": "6509441234",
+            "supportPhoneHours": "6509441234",
+            "supportEmail": "daphne.wang+Dev1Support@clover.com",
+            "supportUrl": "https://dev1.dev.clover.com/developers",
+            "smartReceiptText": "ss",
+            "smartReceiptUrl": ""
+          }
+        ]
+      },
+      "aggregateRating": {
+        "reviewCount": 1,
+        "totalStars": 5
+      },
+      "trialDays": 30
+    }
+  ],
+  "appPopulatedBy": "HAND_CURATED",
+  "collectionStyle": "SCROLL_TILE",
+  "showInAppMarket": true,
+  "showInAppDetail": true,
+  "showInDashboard": true
+}
