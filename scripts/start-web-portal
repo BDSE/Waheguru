@@ -1,0 +1,25 @@
+#/bin/bash
+
+echo "Changing directory to web-portal..."
+cd $devroot/apps/web-portal
+
+if [ -z "$1" ]; then
+    nodeVersionToUse="14"
+else
+    nodeVersionToUse=$1
+fi
+
+currentNodeVersion=$(node -v)
+echo "Default Node version at the moment : "$currentNodeVersion
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
+echo "Changing node version >>>>> "
+nvm use $nodeVersionToUse
+echo "Running yarn install >>>>>"
+echo "Which Yarn>>>>>> " && which yarn
+yarn install
+if [ -z "$2" ]; then
+    yarn serve
+else
+    echo "Proxy beign used: "$2
+    yarn serve --env proxy=$2
+fi

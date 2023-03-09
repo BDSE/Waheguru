@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <title>Timesheets</title>
+</head>
+
+<body ng-app="timesheet">
+    <div ng-controller="timesheetController">
+        <div class="main">
+            <di class="app-container col-md-6">
+                <div class="bg-primary headerText">
+                    <h1>{{views[view].hdrTxt}}</h1>
+                </div>
+                <form name="timeSheetForm" ng-show="view === 'main'">
+                    <div class="input-div">
+                        <input type="text" class="form-control" ng-model="formData.email" name="Email" placeholder="Email"
+                        required ng-model-options="{allowInvalid: false}" ng-pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' />
+                        <span class="status-image" ng-show="timeSheetForm.Email.$error.pattern"><img src="./images/err.png" alt="err" height="20" width="20"></span>
+                        <span class="status-image" ng-show="!timeSheetForm.Email.$error.pattern && formData.email"><img src="./images/correct.png" alt="ok" height="20" width="20"></span>
+                        <div class="alert" ng-show="timeSheetForm.Email.$error.required && timeSheetForm.Email.$dirty">*this feild is required</div>
+                    </div>
+                    <div class="input-div">
+                        <input type="time" class="form-control" ng-model="formData.time" placeholder="Time" />
+                    </div>
+                    <div class="input-div">
+                        <textarea id="story" class="form-control" ng-model="formData.message" rows="3" placeholder="Message(optional)">
+                    </div>
+                  </textarea>
+                    <br />
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <input type="radio" value="bugs" ng-model="formData.radio" name="bugs">
+                                Time working on bugs and features
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-text" value="reviewDev" ng-model="formData.radio" name="bugs">
+                                <input type="radio">
+                                Time spent reviewing the work of junior dev
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="confirm" ng-show="view === 'confirmView'"></div>
+                <div class="confirm" ng-show="view === 'submitted'"></div>
+                <div class="actions">
+                    <button class="btn btn-primary" ng-repeat="action in actionsArr | orderBy: 'action.idx'" ng-click="action.onclick()"
+                        ng-disabled="timeSheetForm.$invalid && action.canDisable">{{action.text}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" ng-show="showLoader" ng-init="showLoader=false">
+            <div class="loader-image">
+                <img ng-src="./images/loader.gif" alt="loading...." width="50" height="50">
+            </div>
+        </div>
+    </div>
+</body>
+<script type="application/javascript" src="js/lib/jquery.js"></script>
+<script type="application/javascript" src="./js/lib/angular.js"></script>
+<script type="application/javascript" src="./js/index.js"></script>
+<script type="application/javascript" src="js/lib/bootstrap.min.js"></script>
+
+</html>

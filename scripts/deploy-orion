@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Deploy Orion + OrionWeb
+
+sudo rm -rf $Tomcat/webapps/orion*
+#sudo rm -rf $Tomcat/webapps/Rigel*
+#sudo rm -rf $Tomcat/webapps/myhealthadmin*
+
+cp $orion_root/target/dev-current.war $Tomcat/webapps/orion.war
+
+#cp $orionweb_root/target/dev-current.war $Tomcat/webapps/ROOT.war
+
+#cp $hyperspaceadmin_root/target/dev-current.war $Tomcat/webapps/myhealthadmin.war
+
+#cp $rigel_root/target/dev-current.war $Tomcat/webapps/Rigel.war
+ 
+echo ">>>> Tomcat /webapps:"$Tomcat/webapps
+ls -al $Tomcat/webapps
+echo ">>>> Tomcat "$Tomcat/work/Catalina/$orion_host
+ls -al $Tomcat/work/Catalina/$orion_host
+

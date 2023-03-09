@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PROCESS=$(ps -ef | grep catalina)
+WORDS=( $PROCESS )
+PID=${WORDS[1]}
+echo "Killing PID: "$PID
+echo "Shableen@89" | sudo -S -k kill -9 $PID
+ps -ef | egrep --color=always tomcat
+
+#cd $Tomcat/bin
+#./shutdown.sh

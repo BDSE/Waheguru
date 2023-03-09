@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# PROCESS=$(ps -ef | grep catalina)
+# WORDS=( $PROCESS )
+# echo $WORDS
+# PID=${WORDS[1]}
+# echo $PID
+
+# while [ True ]; do
+# if [ "$1" = "--alpha" -o "$1" = "-a" ]; then
+#     ALPHA=1
+#     shift 1
+# elif [ "$1" = "--config" -o "$1" = "-c" ]; then
+#     CONFIG=$2
+#     shift 2
+# else
+#     break
+# fi
+# done
+
+# echo "Alpha >>> $ALPHA"
+# echo "Config >> $CONFIG"
+
+# ARG=( "${@}" )
+
+# for i in ${ARG[@]}; do    
+#     echo "In loop >> $i"
+# done
+
+ARG=( "${@}" )
+for ((i=0; i<${#ARG[@]}; ++i)); do
+    if [ "${ARG[i]}" = "--node-version" -o "${ARG[i]}" = "-n" ]; then
+        NODEVERSION=${ARG[i+1]}
+    elif [ "${ARG[i]}" = "--proxy" -o "${ARG[i]}" = "-p" ]; then
+        PROXY=${ARG[i+1]}
+    elif [ "${ARG[i]}" = "--yarn-install" -o "${ARG[i]}" = "-i" ]; then
+        YARNINSTALL=1
+    fi
+done
+echo "Alpha>"$ALPHA
+echo "Config>"$CONFIG

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    localenv="poclocal"
+else
+    localenv=$1
+fi
+
+ext=".sh"
+if [ -r "$Tomcat/bin/$localenv$ext" ]; then
+    sudo cp $Tomcat/bin/$localenv$ext $Tomcat/bin/setenv.sh
+else
+    sudo cp $Tomcat/bin/poclocal.sh $Tomcat/bin/setenv.sh
+fi
+
+cd $orion_root
+echo "Shableen89" | sudo -S -k $Tomcat/bin/catalina.sh jpda start
