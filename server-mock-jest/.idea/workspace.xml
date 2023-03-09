@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="249c9372-cdba-41c3-aa0a-ea123b2d1fc6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/.idea/react-testLib-jest-unit.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/App.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/reportWebVitals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../react-testLib-jest-unit/color-button/src/setupTests.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="29xVV5uBMWahT9MkORi4WMYr4bp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="249c9372-cdba-41c3-aa0a-ea123b2d1fc6" name="Changes" comment="" />
+      <created>1654054743424</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1654054743424</updated>
+      <workItem from="1654054745964" duration="3101000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

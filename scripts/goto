@@ -1,0 +1,78 @@
+#!/bin/bash
+
+declare -a DIRS_TO_LOOK_INTO=(
+  $devroot'/apps'
+  $devroot'/other'
+  $HOME'/mycode'
+)
+declare -a DIR_ARR
+DIR_ARR_DELIMITER=";"
+
+gotoMatch() {
+  echo "Going to >>>>> $1"
+  if [ "$GITPULL" ]; then
+    cd $1 && git pull
+  else
+    cd $1
+  fi
+  exec zsh
+}
+
+ARGS=("${@}")
+for ARG in "${ARGS[@]}"; do
+  if [ "$ARG" = "--git-pull" -o "$ARG" = "-p" ]; then
+    GITPULL=1
+  elif [ "$ARG" = "--exact" -o "$ARG" = "-e" ]; then
+    EXACTMATCH=1
+  else
+    DIRECTORY_TO_LOOK_FOR="$ARG"
+  fi
+done
+
+for DIR in "${DIRS_TO_LOOK_INTO[@]}"; do
+  echo "Looking inside: $DIR"
+  cd $DIR
+  if [ -z "$EXACTMATCH" ]; then
+    MATCHES=$(ls | grep $DIRECTORY_TO_LOOK_FOR)
+  else
+    for f in *; do
+      if [ $f = "$DIRECTORY_TO_LOOK_FOR" ]; then
+        MATCHES="$f"
+        BREAKLOOP=1
+        break
+      fi
+    done
+  fi
+
+  if [ "$MATCHES" ]; then
+    if [ -z "$EXACTMATCH" ]; then
+      echo -e "Matches found inside $DIR: \n$MATCHES"
+    else
+      echo -e "########## EXACT match found inside $DIR ##############"
+    fi
+    ARR=($(echo "$MATCHES" | tr ' ' '\n'))
+    for match in "${ARR[@]}"; do
+      DIR_ARR+=("$match$DIR_ARR_DELIMITER$DIR")
+    done
+  fi
+
+  if [ "$BREAKLOOP" ]; then
+    break
+  fi
+done
+
+if [ "${#DIR_ARR[@]}" -eq "1" ]; then
+  DIR_SPLIT=($(echo "${DIR_ARR[0]}" | tr "$DIR_ARR_DELIMITER" "\n"))
+  gotoMatch "${DIR_SPLIT[1]}"/"${DIR_SPLIT[0]}"
+elif [ "${#DIR_ARR[@]}" -gt "1" ]; then
+  echo "######### Multiple matches found for: $DIRECTORY_TO_LOOK_FOR ########"
+  for DIR_ARR_INDEX in "${!DIR_ARR[@]}"; do
+    DIR_SPLIT=($(echo "${DIR_ARR[$DIR_ARR_INDEX]}" | tr "$DIR_ARR_DELIMITER" "\n"))
+    echo "Enter $DIR_ARR_INDEX for ${DIR_SPLIT[0]}"
+  done
+  read dirindex
+  DIR_SPLIT=($(echo "${DIR_ARR[$dirindex]}" | tr "$DIR_ARR_DELIMITER" "\n"))
+  gotoMatch "${DIR_SPLIT[1]}/${DIR_SPLIT[0]}"
+else
+  echo "######### NO MATCH FOUND FOR $DIRECTORY_TO_LOOK_FOR ########"
+fi

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+rsync -aP --delete $orionweb_root/src/main/webapp/resources/css/ $orionweb_root/target/dev-current/resources/css
+
+## ls -al $orionweb_root/target/dev-current/resources/css
+
+rsync -aP --delete $orionweb_root/src/main/webapp/resources/js/ $orionweb_root/target/dev-current/resources/js
+
+rsync -aP --delete $orionweb_root/src/main/webapp/resources/html/ $orionweb_root/target/dev-current/resources/html
+
+rsync -aP --delete $orionweb_root/src/main/webapp/resources/images/ $orionweb_root/target/dev-current/resources/images
+
+##############  For rigel  #####################
+rsync -aP --delete $rigel_root/src/main/webapp/resources/ $rigel_root/target/dev-current/resources
+rsync -aP --delete $rigel_root/src/main/webapp/WEB-INF/views/ $rigel_root/target/dev-current/WEB-INF/views
+
+################################################
+
+## ls -al $orionweb_root/target/dev-current/resources/js
+
+find $orionweb_root/target/dev-current/resources/css -mmin -5
+
+#rsync -aP --delete $orionweb_root/src/main/webapp/resources/ $orionweb_root/target/dev-current/resources
+
+##############
+
+
+

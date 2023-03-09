@@ -1,0 +1,8 @@
+<Context
+   docBase="/Users/s0282245/Documents/code/orionweb/target/dev-current"
+   path=""
+   reloadable="true"
+   cachingAllowed="false"
+   >
+   <WatchedResource>WEB-INF/web.xml</WatchedResource>
+</Context>

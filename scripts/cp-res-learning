@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#for rigel folder on tomcat webapps dir
+rsync -aP --delete /Users/s0282245/Documents/code/rigel/src/main/webapp/resources/ $Tomcat/webapps/Rigel/resources
+

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Changing directory to web-legacy..."
+cd $devroot/apps/web-legacy
+
+if [ -z "$1" ]; then
+    nodeVersionToUse="12"
+else
+    nodeVersionToUse=$1
+fi
+
+if [ -z "$2" ]; then
+    proxy="https://dev1.dev.clover.com"
+else
+    proxy=$2
+fi
+
+echo "Changing node version to: "$nodeVersionToUse
+
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
+nvm use $nodeVersionToUse
+
+echo "Running yarn install >>>>>"
+echo "Which Yarn >>>>>> " && which yarn
+yarn install
+
+echo "Proxy beign used: "$proxy
+echo "Shableen@@89" | sudo ember s --ssl --proxy $proxy

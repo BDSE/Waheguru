@@ -7,6 +7,7 @@ import { createPost } from '../actions';
 class PostsNew extends Component {
 
     renderInput(field) {
+        console.log("feild: ", field);
         const classname = `form-group ${field.meta.error && field.meta.touched ? 'has-danger' : ''}`;
         return (
             <div className={classname}>
@@ -27,6 +28,7 @@ class PostsNew extends Component {
     }
 
     render() {
+        console.log("post_new props: ",this.props);
         const handleSubmitThisFunctionIsProvidedByReduxForm = this.props.handleSubmit;
         return (
             <form onSubmit={handleSubmitThisFunctionIsProvidedByReduxForm(this.handleSubmit.bind(this))} className="form-group">
@@ -45,7 +47,7 @@ class PostsNew extends Component {
                 <Field
                     name="content"
                     component={this.renderInput}
-                    type="text"
+                    type="checkbox"
                     title="Post Content"
                 />
                 <button type="submit" className="btn btn-primary">submit</button>
@@ -56,6 +58,7 @@ class PostsNew extends Component {
 }
 
 function validate(values) {
+    console.log("values passed to validate function:", values);
     let errors = {}
 
     if (!values.title) {

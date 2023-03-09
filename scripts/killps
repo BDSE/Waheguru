@@ -1,0 +1,4 @@
+#!/bin/bash
+read -p "Enter process id:" pid
+echo "Shableen@@89" | sudo -S -k kill -9 $pid
+

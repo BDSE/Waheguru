@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd $orion_root/logs
+tail -f orion.log
