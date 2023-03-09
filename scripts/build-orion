@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#kill tomcat if its running.
+kill-tc
+
+#goto git repos, update and build the code if remote repos have changed
+cd $orion_root
+git pull
+mvn clean install
+
+cd $orionweb_root
+git pull
+mvn clean install
+
+cd $rigel_root
+git pull
+mvn clean install
+
+################################
+
+#deploy code on the server
+
+###############################
+
+#start server
+
+################################
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+#start memcache
+#launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+echo ">>> Starting Tomcat ..."
+#cd $orion_root
+#$Tomcat/bin/catalina.sh jpda start
+echo "Shableen@89" | sudo -S -k $Tomcat/bin/catalina.sh jpda start

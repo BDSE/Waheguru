@@ -1,0 +1,48 @@
+#!/bin/bash
+
+DP_DIRECTORY="$devroot/apps/developer-platform-web"
+echo -e "###################################################\n############   Changing directory to   ############\n############          DP/GDE           ############\n###################################################"
+cd $DP_DIRECTORY
+
+ARG=( "${@}" )
+for ((i=0; i<${#ARG[@]}; ++i)); do
+    if [ "${ARG[i]}" = "--node-version" -o "${ARG[i]}" = "-n" ]; then
+        NODEVERSION=${ARG[i+1]}
+    elif [ "${ARG[i]}" = "--proxy" -o "${ARG[i]}" = "-p" ]; then
+        PROXY=${ARG[i+1]}
+    elif [ "${ARG[i]}" = "--yarn-install" -o "${ARG[i]}" = "-i" ]; then
+        YARNINSTALL=1
+    elif [ "${ARG[i]}" = "--gde-mode" -o "${ARG[i]}" = "-gde" ]; then
+        GDEMODE=1
+    fi
+done
+
+if [ -z "$NODEVERSION" ]; then
+    NODEVERSION="14"
+fi
+
+currentNodeVersion=$(node -v)
+echo "-----####### Default Node version at the moment : $currentNodeVersion #######-----"
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
+echo "-----####### Changing node version #######-----"
+nvm use $NODEVERSION
+
+if [ "$YARNINSTALL" ]; then
+    echo "-----###### Running yarn install #######-----"
+    yarn install
+fi
+
+if [ "$GDEMODE" ]; then
+    echo "-----###### Going to run yarn start-gde #######-----"
+    STARTCOMMAND=start-gde
+else
+    echo "-----###### Going to run yarn start #######-----"
+    STARTCOMMAND=start
+fi
+
+if [ -z "$PROXY" ]; then
+    yarn $STARTCOMMAND
+else
+    echo "-----####### Proxy beign used: $PROXY ########-----"
+    yarn $STARTCOMMAND --env proxy=$PROXY
+fi

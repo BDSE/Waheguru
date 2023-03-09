@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# $Tomcat/bin/catalina.sh stop
+echo ">>>> Clean Orion..."
+sudo rm -rf $Tomcat/webapps/orion*
+sudo rm -rf $Tomcat/webapps/ROOT*
+sudo rm -rf $Tomcat/work/Catalina/$orion_host/orion*
+sudo rm -rf $Tomcat/work/Catalina/$orion_host/_
+sudo rm -rf $orion_root/logs/*
+sudo rm -rf $orionweb_root/logs/*
+echo "\n\n>>>> webapps:  "$Tomcat/webapps
+ls -al $Tomcat/webapps
+echo ">>>> work:  "$Tomcat/work/Catalina/$orion_host
+ls -al $Tomcat/work/Catalina/$orion_host

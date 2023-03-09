@@ -1,0 +1,6 @@
+#########hyperSpace#######
+rsync -aP --delete $hyperspaceadmin_root/src/main/webapp/resources/ $hyperspaceadmin_root/target/dev-current/resources
+rsync -aP --delete $hyperspaceadmin_root/src/main/webapp/WEB-INF/views/ $hyperspaceadmin_root/target/dev-current/WEB-INF/views
+
+
+
